@@ -2,3 +2,4 @@ database
 logs
 .env
 src/wp-config.php
+robots.txt
