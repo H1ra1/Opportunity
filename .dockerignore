@@ -1,0 +1,5 @@
+database
+logs
+.env
+src/wp-config.php
+.git
