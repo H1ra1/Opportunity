@@ -3,3 +3,4 @@ logs
 .env
 src/wp-config.php
 robots.txt
+src/wp-content/uploads/*
