@@ -34,9 +34,18 @@ if ( ! class_exists( 'OAA' ) ) {
             define( 'OAA_PATH', plugin_dir_path( __FILE__ ) );
             define( 'OAA_URL', plugin_dir_url( __FILE__ ) );
 
+            // Include utility functions.
+            include_once OAA_PATH . 'includes/oaa-utility-functions.php';
+
+            // Include functions.
+            oaa_include_once( 'includes/oaa-functions.php' );
+            oaa_include_once( 'includes/oaa-template.php' );
+
             // Add actions.
             add_action( 'init', array( $this, 'register_post_types' ), 5 );
-            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+            add_action( 'init', array( $this, 'create_pages' ), 10 );
+            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_admin' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
             add_action( 'save_post', array( $this, 'save_post_auction' ), 10, 3 );
         }
 
@@ -134,8 +143,33 @@ if ( ! class_exists( 'OAA' ) ) {
             );
         }
 
-        public function enqueue_scripts() {
+        public function create_pages() {
+
+            // Check if the page already exists.
+            if( empty( get_page_by_title( 'leiloes', 'OBJECT', 'page' ) ) ) {
+
+                // Create page Leilões and insert shortcode to list the auctions registered.
+                wp_insert_post(
+                    array(
+                    'comment_status' => 'close',
+                    'ping_status'    => 'close',
+                    'post_author'    => 1,
+                    'post_title'     => ucwords( 'Leilões' ),
+                    'post_name'      => strtolower( str_replace(' ', '-', trim( 'leiloes' ) ) ),
+                    'post_status'    => 'publish',
+                    'post_content'   => '[oaa_available_auctions]',
+                    'post_type'      => 'page'
+                    )
+                );
+            }
+        }
+
+        public function enqueue_scripts_admin() {
             wp_enqueue_script( 'oaa-admin-scripts', OAA_URL . "assets/js/oaa-admin.js", array( 'jquery' ), $this->version );
+        }
+
+        public function enqueue_scripts() {
+            wp_enqueue_style( 'oaa-styles', OAA_URL . "assets/css/oaa.min.css", array(), $this->version );
         }
 
         public function save_post_auction( int $post_id, WP_Post $post, bool $update ) {
