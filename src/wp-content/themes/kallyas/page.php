@@ -36,7 +36,6 @@ $zn_config['size'] = $zn_config['sidebar'] ? 'col-sm-8 col-md-'.$content_size : 
 						?>
 					</div><!--// #th-content-page -->
 				</div><!--// #th-content-page wrapper -->
-				<?php get_sidebar(); ?>
 			</div>
 		</div>
 	</section><!--// #content -->
