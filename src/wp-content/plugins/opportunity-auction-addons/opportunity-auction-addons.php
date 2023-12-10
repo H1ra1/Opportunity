@@ -186,7 +186,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_lowest_price', $auction_data[ 'menor_preco_para_aceitar' ] );
             update_post_meta( $product_id, '_regular_price', $auction_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $auction_data[ 'preco_venda_imediata' ] );
-            update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_data[ 'incremento_de_lance' ] );
+            update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
 
@@ -209,7 +209,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_lowest_price', $auction_data[ 'menor_preco_para_aceitar' ] );
             update_post_meta( $product_id, '_regular_price', $auction_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $auction_data[ 'preco_venda_imediata' ] );
-            update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_data[ 'incremento_de_lance' ] );
+            update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
         }
