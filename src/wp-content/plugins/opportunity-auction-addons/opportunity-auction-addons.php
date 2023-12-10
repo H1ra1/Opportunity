@@ -151,10 +151,10 @@ if ( ! class_exists( 'OAA' ) ) {
             
             foreach( $auction_configs[ 'lotes' ] as $indice => $lote ) {
                 if( empty( $lote[ 'lote_id' ] ) ) {
-                    $product_id = $this->create_auction_product( $lote, $post );
+                    $product_id = $this->create_auction_product( $lote, $auction_configs, $post );
                 } else {
                     $product_id = $lote[ 'lote_id' ];
-                    $this->update_auction_product( $lote[ 'lote_id' ], $lote, $post );
+                    $this->update_auction_product( $lote[ 'lote_id' ], $lote, $auction_configs, $post );
                 }
 
                 // Add on Auction array data the product id on lote id field.
@@ -167,7 +167,7 @@ if ( ! class_exists( 'OAA' ) ) {
             // wp_die();
         }
 
-        private function create_auction_product( array $auction_data, WP_Post $post ) {
+        private function create_auction_product( array $auction_data, array $auction_configs, WP_Post $post ) {
 
             // Set auction product data
             $product = new WC_Product();
@@ -187,13 +187,13 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, '_regular_price', $auction_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $auction_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_data[ 'incremento_de_lance' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_data[ 'data_de_inicio' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_data[ 'data_de_termino' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
 
             return $product_id;
         }
 
-        private function update_auction_product( int $product_id, array $auction_data, WP_Post $post ) {
+        private function update_auction_product( int $product_id, array $auction_data, array $auction_configs, WP_Post $post ) {
 
             // Update auction product data
             $auction_product_object = wc_get_product( $product_id );
@@ -210,8 +210,8 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, '_regular_price', $auction_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $auction_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_data[ 'incremento_de_lance' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_data[ 'data_de_inicio' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_data[ 'data_de_termino' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
         }
     }
 
