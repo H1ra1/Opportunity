@@ -4,4 +4,5 @@ logs
 src/wp-config.php
 robots.txt
 src/wp-content/uploads/*
+src/wp-content/uploads
 node_modules

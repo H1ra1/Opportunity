@@ -2,4 +2,6 @@ database
 logs
 .env
 src/wp-config.php
+src/wp-content/uploads
 .git
+node_modules
