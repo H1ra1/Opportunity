@@ -5,7 +5,7 @@
 
     $auction_id     = get_the_ID();
     $auction_title  = get_the_title();
-    $auction_fields = get_field( 'auction', $auction_id );
+    $auction_data   = get_field( 'auction', $auction_id );
 
     get_header();
 ?>
@@ -15,7 +15,7 @@
         <div class="oaa-single-auction">
             <section class="oaa-single-auction__auction_holder fxb-row fxb-row-col-sm fxb-row-col-md">
                 <div class="oaa-auction-thumb fxb-col fxb fxb-center-y fxb-center-x">
-                    <img src="<?php echo esc_url( $auction_fields[ 'capa_do_leilao' ][ 'url' ] ); ?>" alt="<?php echo esc_attr( ! empty( $auction_fields[ 'capa_do_leilao' ][ 'alt' ] ) ? $auction_fields[ 'capa_do_leilao' ][ 'alt' ] : $auction_title ); ?>">
+                    <img src="<?php echo esc_url( $auction_data[ 'capa_do_leilao' ][ 'url' ] ); ?>" alt="<?php echo esc_attr( ! empty( $auction_data[ 'capa_do_leilao' ][ 'alt' ] ) ? $auction_data[ 'capa_do_leilao' ][ 'alt' ] : $auction_title ); ?>">
                 </div>
 
                 <div class="oaa-auction-infos fxb-col">
@@ -43,7 +43,7 @@
 
                         <?php 
                             countdown_clock(
-                                $end_date   = $auction_fields[ 'data_de_termino' ],
+                                $end_date   = $auction_data[ 'data_de_termino' ],
                                 $item_id    = $auction_id,
                                 $item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
                             );
@@ -59,10 +59,10 @@
             </section>
 
             <section class="oaa-single-auction__auction_lots">
-                <?php foreach( $auction_fields[ 'lotes' ] as $lot ): ?>
+                <?php foreach( $auction_data[ 'lotes' ] as $indice => $lot ): ?>
                     <?php oaa_get_template( 'templates/oaa-lot-card-template', array( 
                         'auction_lot_data'  => $lot,
-                        'lot_product_data'  => oaa_get_auction_lot_data( $lot[ 'lote_id' ] )
+                        'lot_product_data'  => oaa_get_auction_lot_data( $auction_id, $lot[ 'lote_id' ] )
                     ) ); ?>
                 <?php endforeach ?>
             </section>

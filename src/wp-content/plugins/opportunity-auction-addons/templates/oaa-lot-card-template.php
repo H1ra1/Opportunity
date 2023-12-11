@@ -1,20 +1,25 @@
 <div class="oaa-lot-card">
-    <a href="<?php echo esc_url( $args[ 'lot_product_data' ][ 'url' ] ); ?>" class="oaa-lot-card__thumb">
-        <img src="" alt="">
+    <a href="<?php echo esc_url( $args[ 'lot_product_data' ][ 'url' ] ); ?>" class="oaa-lot-card__thumb" lote="Lote <?php echo esc_attr( $args[ 'auction_lot_data' ][ 'numero_do_lote' ] ); ?>">
+        <img src="<?php echo esc_url( $args[ 'lot_product_data' ][ 'animal' ][ 'fotos' ][ 0 ][ 'url' ] ); ?>" alt="<?php echo esc_attr( $args[ 'lot_product_data' ][ 'animal' ][ 'fotos' ][ 0 ][ 'alt' ] ); ?>">
     </a>
 
     <div class="oaa-lot-card__title_box">
         <p><?php esc_html_e( $args[ 'auction_lot_data' ][ 'animal' ]->post_title ); ?></p>
     </div>
 
+    <div class="oaa-lot-card__resume_box">
+        <p><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'comentario_resumido' ] ); ?></p>
+    </div>
+
     <div class="oaa-lot-card__details_list">
         <div class="list-block">
-            <p>Raça: <strong>Quarto</strong></p>
-            <p>Sexo: <strong>Quarto</strong></p>
-            <p>Nascimento: <strong>Quarto</strong></p>
-            <p>Altura Aproximada: <strong>Quarto</strong></p>
-            <p>Vend: <strong>Quarto</strong></p>
-            <p>Local: <strong>Quarto</strong></p>
+            <p>Raça: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'raca' ]->name ); ?></strong></p>
+            <p>Sexo: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'sexo' ]->name ); ?></strong></p>
+            <p>Nascimento: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'data_de_nascimento' ] ); ?></strong></p>
+            <p>Altura Aproximada: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'altura_aproximada' ] ); ?></strong></p>
+            <p>Pelagem: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'pelagem' ]->name ); ?></strong></p>
+            <p>Vend: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'criador' ]->name ); ?></strong></p>
+            <p>Local: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'raca' ]->name ); ?></strong></p>
         </div>
     </div>
 
@@ -22,7 +27,12 @@
         <p>Lance Atual</p>
 
         <div class="bid-current-installments">
-            <p><strong>R$ 650,00</strong> x 40 Parcelas</p>
+            <p>
+                <strong>R$ <?php esc_html_e( $args[ 'lot_product_data' ][ 'current_bid' ] ); ?></strong>
+                <?php if( ! empty( $args[ 'lot_product_data' ][ 'auction' ][ 'total_de_parcelas' ] ) ): ?>
+                <span>x <?php esc_html_e( $args[ 'lot_product_data' ][ 'auction' ][ 'total_de_parcelas' ] ); ?> Parcelas</span>
+                <?php endif; ?>
+            </p>
         </div>
     </div>
 

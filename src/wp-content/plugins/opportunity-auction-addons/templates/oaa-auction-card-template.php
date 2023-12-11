@@ -21,7 +21,7 @@
     <div class="oaa-auction-card__term_box">
         <?php if( ! empty( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) && $args[ 'auction_fields' ][ 'data_de_termino' ] ): ?>
             <p>Prazo para Pré-Lances:</p>
-            <p><strong><?php esc_html_e( formatDateOnly( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) ); ?></strong><span>(<?php esc_html_e( formatTimeOnly( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) ); ?>)</span> à <strong><?php esc_html_e( formatDateOnly( $args[ 'auction_fields' ][ 'data_de_termino' ] ) ); ?></strong><span>(<?php esc_html_e( formatTimeOnly( $args[ 'auction_fields' ][ 'data_de_termino' ] ) ); ?>)</span></p>
+            <p><strong><?php esc_html_e( oaa_format_date_only( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) ); ?></strong><span>(<?php esc_html_e( oaa_format_time_only( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) ); ?>)</span> à <strong><?php esc_html_e( oaa_format_date_only( $args[ 'auction_fields' ][ 'data_de_termino' ] ) ); ?></strong><span>(<?php esc_html_e( oaa_format_time_only( $args[ 'auction_fields' ][ 'data_de_termino' ] ) ); ?>)</span></p>
         <?php endif; ?>
     </div>
 

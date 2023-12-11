@@ -29,23 +29,30 @@ function pprint( array | object $content ) {
     print( "<pre>" . print_r( $content, true ) . "</pre>" );
 }
 
-function formatDate( string $str ) {
+function oaa_format_date( string $str ) {
     $timestamp = strtotime( $str );
     $date = date( 'd/m/Y H:i:s', $timestamp );
 
     return $date;
 }
 
-function formatDateOnly( string $str ) {
+function oaa_format_date_only( string $str ) {
     $timestamp = strtotime( $str );
     $date = date( 'd/m/Y', $timestamp );
 
     return $date;
 }
 
-function formatTimeOnly( string $str ) {
+function oaa_format_time_only( string $str ) {
     $timestamp = strtotime( $str );
     $time = date( 'H:i', $timestamp );
 
     return $time;
+}
+
+function oaa_format_money( $number ) {
+    $number = ( double ) $number;
+    $format = number_format( $number, 2, ",", "." );
+
+    return $format;
 }
