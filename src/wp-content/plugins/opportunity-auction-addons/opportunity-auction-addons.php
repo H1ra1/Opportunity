@@ -53,7 +53,7 @@ if ( ! class_exists( 'OAA' ) ) {
             // Register the Animal post type.
             register_post_type( 'animal', 
                 array(
-                    'labels' => array(
+                    'labels'            => array(
                         'name' => 'Animais',
                         'singular_name' => 'Animal',
                         'menu_name' => 'Animais',
@@ -84,15 +84,15 @@ if ( ! class_exists( 'OAA' ) ) {
                         'item_link' => 'Animal Link',
                         'item_link_description' => 'A link to a animal.',
                     ),
-                    'public' => true,
-                    'show_in_rest' => true,
-                    'supports' => array(
+                    'public'            => true,
+                    'show_in_rest'      => true,
+                    'supports'          => array(
                         0 => 'title',
                         1 => 'editor',
                         2 => 'thumbnail',
                     ),
-                    'delete_with_user' => false,
-                    'menu_icon' => 'dashicons-buddicons-activity'
+                    'delete_with_user'  => false,
+                    'menu_icon'         => 'dashicons-buddicons-activity'
                 ) 
             );
 

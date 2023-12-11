@@ -27,5 +27,23 @@ function oaa_available_auctions_shorcode() {
     wp_reset_postdata();
 }
 
-// Add shortcodes
+function oaa_single_auction_template( $single ) {
+    global $post;
+    $file_path = OAA_PATH . '/templates/oaa-single-auction-template.php';
+
+    // Checks for single template by post type.
+    if ( $post->post_type == 'auction' ) {
+        if ( file_exists( $file_path ) ) {
+            return $file_path;
+        }
+    }
+
+    return $single;
+
+}
+
+// Add shortcodes.
 add_shortcode( 'oaa_available_auctions', 'oaa_available_auctions_shorcode' );
+
+// Add filters.
+add_filter( 'single_template', 'oaa_single_auction_template' );

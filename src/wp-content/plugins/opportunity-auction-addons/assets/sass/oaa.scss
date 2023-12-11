@@ -1,3 +1,7 @@
+// Variables.
+$colorBase1: #37406D;
+$colorBase2: #0198DA;
+
 .oaa-auction-cards-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -7,7 +11,7 @@
 .oaa-auction-card {
     max-width: 360px;
 
-    &__image {
+    &__thumb {
         display: block;
         text-decoration: none;
         width: 100%;
@@ -22,7 +26,7 @@
     }
 
     &__timer_box {
-        background-color: #37406D;
+        background-color: $colorBase1;
         padding: 10px;
 
         p {
@@ -54,7 +58,7 @@
         p {
             font-size: 16px;
             font-weight: 400;
-            color: #37406D;
+            color: $colorBase1;
             margin: 0;
         }
     }
@@ -69,13 +73,13 @@
             &:nth-child( 1 ) {
                 font-size: 12px;
                 font-weight: 100;
-                color: #37406D;
+                color: $colorBase1;
             }
 
             &:nth-child( 2 ) {
                 font-size: 12px;
                 font-weight: 100;
-                color: #37406D;
+                color: $colorBase1;
 
                 span {
                     color: grey;
@@ -89,8 +93,143 @@
         width: 100%;
         padding: 20px 10px;
         text-decoration: none;
-        background-color: #0198DA;
+        background-color: $colorBase2;
         color: #FFF;
         text-align: center;
+    }
+}
+
+.oaa-lot-card {
+    max-width: 360px;
+
+    &__thumb {
+        display: block;
+        width: 100%;
+        height: 230px;
+        background-color: gray;
+        text-decoration: none;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+    }
+
+    &__title_box {
+        padding: 15px 5px;
+        
+        p {
+            font-size: 16px;
+            font-weight: 400;
+            color: $colorBase1;
+            text-align: center;
+        }
+    }
+
+    &__details_list {
+        padding: 15px 5px;
+        .list-block {
+            margin-bottom: 10px;
+
+            p {
+                font-size: 12px;
+                font-weight: 400;
+                color: gray;
+                margin: 0;
+
+                strong {
+                    color: rgb(102, 102, 102);
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    &__bid_current_box {
+        .bid-current-installments {
+
+        }
+    }
+
+    &__button {
+        text-decoration: none;
+        display: block;
+        padding: 15px 10px;
+        text-align: center;
+        color: #FFF;
+        font-size: 14px;
+        font-weight: 400;
+
+        &.--dark {
+            background-color: $colorBase1;
+        }
+
+        &.--light {
+            background-color: $colorBase2;
+        }
+    }
+}
+
+.oaa-single-auction {
+    &__auction_holder {
+        gap: 20px;
+
+        .oaa-auction-thumb {
+            background-color: gray;
+        }
+
+        .oaa-auction-infos {
+            &__title_box {
+                p {
+                    font-size: 22px;
+                    color: $colorBase1;
+                }
+            }
+
+            &__details_list {
+                .list-block {
+                    margin-bottom: 15px;
+
+                    p {
+                        font-size: 12px;
+                        font-weight: 400;
+                        color: gray;
+                        margin: 0;
+
+                        strong {
+                            color: rgb(102, 102, 102);
+                            font-weight: 600;
+                        }
+                    }
+
+                    &:last-of-type {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+
+            &__timer_box {
+                padding: 20px 10px;
+                border-top: 1px solid gray;
+
+                p {
+                    text-align: center;
+                    font-size: 16px;
+                    font-weight: 100;
+                    color: gray;
+                }
+            }
+
+            &__menu {
+                a {
+
+                }
+            }
+        }
+    }
+
+    &__auction_lots {
+        margin-top: 50px;
     }
 }
