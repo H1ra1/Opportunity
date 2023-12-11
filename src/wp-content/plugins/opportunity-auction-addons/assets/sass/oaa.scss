@@ -1,3 +1,96 @@
+.oaa-auction-cards-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+}
+
 .oaa-auction-card {
-    background-color: red;
+    max-width: 360px;
+
+    &__image {
+        display: block;
+        text-decoration: none;
+        width: 100%;
+        height: 250px;
+        background-color: grey;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+    }
+
+    &__timer_box {
+        background-color: #37406D;
+        padding: 10px;
+
+        p {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 300;
+            color: #FFF;
+            margin: 0;
+        }
+
+        .uwa_auction_product_countdown {
+            background-color: transparent !important;
+            box-shadow: none !important;
+            margin: 0;
+            padding: 0;
+
+            span {
+                color: #FFF !important;
+            }
+        }
+    }
+
+    &__title_box {
+        text-align: center;
+        padding: 20px 10px;
+        min-height: 95px;
+        border-bottom: 1px solid grey;
+
+        p {
+            font-size: 16px;
+            font-weight: 400;
+            color: #37406D;
+            margin: 0;
+        }
+    }
+
+    &__term_box {
+        text-align: center;
+        padding: 20px 10px;
+
+        p {
+            margin: 0;
+
+            &:nth-child( 1 ) {
+                font-size: 12px;
+                font-weight: 100;
+                color: #37406D;
+            }
+
+            &:nth-child( 2 ) {
+                font-size: 12px;
+                font-weight: 100;
+                color: #37406D;
+
+                span {
+                    color: grey;
+                }
+            }
+        }
+    }
+
+    &__main_button {
+        display: block;
+        width: 100%;
+        padding: 20px 10px;
+        text-decoration: none;
+        background-color: #0198DA;
+        color: #FFF;
+        text-align: center;
+    }
 }
