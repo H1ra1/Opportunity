@@ -90,7 +90,7 @@ if ( ! class_exists( 'OAA' ) ) {
 
             $auction_configs = get_field( 'auction', $post_id );
 
-            if( ! is_array( $auction_configs[ 'lotes' ] ) || count(  $auction_configs[ 'lotes' ] ) == 0 )
+            if( ! is_array( $auction_configs ) || ! is_array( $auction_configs[ 'lotes' ] ) || count(  $auction_configs[ 'lotes' ] ) == 0 )
                 return;
             
             foreach( $auction_configs[ 'lotes' ] as $indice => $lote ) {
@@ -131,6 +131,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
+            update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
 
             return $product_id;
@@ -155,6 +156,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
+            update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
         }
     }
