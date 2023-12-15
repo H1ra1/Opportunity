@@ -24,6 +24,7 @@ if ( ! class_exists( 'OAA' ) ) {
 		}
 
         public function initialize() {
+            global $wpdb;
             
             // Check if ACF is active.
             if ( ! class_exists('ACF') ) {
@@ -33,6 +34,7 @@ if ( ! class_exists( 'OAA' ) ) {
             // Define constants.
             define( 'OAA_PATH', plugin_dir_path( __FILE__ ) );
             define( 'OAA_URL', plugin_dir_url( __FILE__ ) );
+            define( 'WPDB', $wpdb );
 
             // Include utility functions.
             include_once OAA_PATH . 'includes/oaa-utility-functions.php';
@@ -47,13 +49,20 @@ if ( ! class_exists( 'OAA' ) ) {
             oaa_include_once( 'includes/oaa-register-taxonomies.php' );
 
             // Add actions.
-            add_action( 'init', array( $this, 'create_pages' ), 10 );
+            add_action( 'init', array( $this, 'init' ), 10 );
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_admin' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
             add_action( 'save_post', array( $this, 'save_post_auction' ), 10, 3 );
         }
 
-        public function create_pages() {
+        public function init() {
+
+            // Call functions.
+            $this->create_pages();
+            $this->create_database_tables();
+        }
+
+        private function create_pages() {
 
             // Check if the page already exists.
             if( empty( get_page_by_title( 'leiloes', 'OBJECT', 'page' ) ) ) {
@@ -158,6 +167,30 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
+        }
+
+        private function create_database_tables() {
+            require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+            $charset_collate = WPDB->get_charset_collate();
+            $prefix          = WPDB->prefix;
+
+            $queries = array(
+                'oaa_pre_bids'  => "
+                    CREATE TABLE IF NOT EXISTS {$prefix}`oaa_pre_bids` (
+                        id bigint NOT NULL AUTO_INCREMENT,
+                        user_id bigint NOT NULL,
+                        auction_id bigint NOT NULL,
+                        bid decimal(32,4) NULL,
+                        date timestamp NOT NULL,
+                        PRIMARY KEY ( id )
+                    ) {$charset_collate}
+                "
+            );
+
+            foreach( $queries as $query ) {
+                dbDelta( $query );
+            }
         }
     }
 
