@@ -106,12 +106,15 @@ if ( ! class_exists( 'OAA' ) ) {
             if( ! is_array( $auction_configs ) || ! is_array( $auction_configs[ 'lotes' ] ) || count(  $auction_configs[ 'lotes' ] ) == 0 )
                 return;
             
-            foreach( $auction_configs[ 'lotes' ] as $indice => $lote ) {
-                if( empty( $lote[ 'lote_id' ] ) ) {
-                    $product_id = $this->create_auction_product( $lote, $auction_configs, $post, $indice );
+            foreach( $auction_configs[ 'lotes' ] as $indice => $lot ) {
+                $animal_data = get_field( 'animal', $lot[ 'animal' ]->ID );
+                $lot[ 'animal_data' ] = $animal_data;
+
+                if( empty( $lot[ 'lote_id' ] ) ) {
+                    $product_id = $this->create_auction_product( $lot, $auction_configs, $post, $indice );
                 } else {
-                    $product_id = $lote[ 'lote_id' ];
-                    $this->update_auction_product( $lote[ 'lote_id' ], $lote, $auction_configs, $post, $indice );
+                    $product_id = $lot[ 'lote_id' ];
+                    $this->update_auction_product( $lot[ 'lote_id' ], $lot, $auction_configs, $post, $indice );
                 }
 
                 // Add on Auction array data the product id on lote id field.
@@ -122,12 +125,17 @@ if ( ! class_exists( 'OAA' ) ) {
             update_field( 'auction', $auction_configs, $post_id );
         }
 
-        private function create_auction_product( array $auction_data, array $auction_configs, WP_Post $post, int $lot_indice ) {
+        private function create_auction_product( array $lot_data, array $auction_configs, WP_Post $post, int $lot_indice ) {
 
-            // Set auction product data
+            // Set auction product data.
             $product = new WC_Product();
 
-            $product->set_name( "Lote: {$auction_data[ 'numero_do_lote' ]} - Evento: {$post->post_title}" );
+            $product->set_name( "Lote: {$lot_data[ 'numero_do_lote' ]} - Evento: {$post->post_title}" );
+
+            if( is_array( $lot_data[ 'animal_data' ] ) && count( $lot_data[ 'animal_data' ][ 'fotos' ] ) > 0 ) {
+                $product->set_image_id( $lot_data[ 'animal_data' ][ 'fotos' ][ 0 ][ 'ID' ] );
+            }
+
             $product->save();
             
             // Retrive the product created id.
@@ -137,38 +145,43 @@ if ( ! class_exists( 'OAA' ) ) {
             wp_set_object_terms( $product_id, 'auction', 'product_type' );
 
             // Update the post metas.
-            update_post_meta( $product_id, 'woo_ua_opening_price', $auction_data[ 'preco_de_abertura' ] );
-            update_post_meta( $product_id, 'woo_ua_lowest_price', $auction_data[ 'menor_preco_para_aceitar' ] );
-            update_post_meta( $product_id, '_regular_price', $auction_data[ 'preco_venda_imediata' ] );
-            update_post_meta( $product_id, '_price', $auction_data[ 'preco_venda_imediata' ] );
+            update_post_meta( $product_id, 'woo_ua_opening_price', $lot_data[ 'preco_de_abertura' ] );
+            update_post_meta( $product_id, 'woo_ua_lowest_price', $lot_data[ 'menor_preco_para_aceitar' ] );
+            update_post_meta( $product_id, '_regular_price', $lot_data[ 'preco_venda_imediata' ] );
+            update_post_meta( $product_id, '_price', $lot_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
 
             return $product_id;
         }
 
-        private function update_auction_product( int $product_id, array $auction_data, array $auction_configs, WP_Post $post, int $lot_indice ) {
+        private function update_auction_product( int $product_id, array $lot_data, array $auction_configs, WP_Post $post, int $lot_indice ) {
 
-            // Update auction product data
+            // Update auction product data.
             $auction_product_object = wc_get_product( $product_id );
-            if ( $auction_product_object instanceof WC_Product ) {
-                $auction_product_object->set_name( "Lote: {$auction_data[ 'numero_do_lote' ]} - Evento: {$post->post_title}" );
 
-                // Save it
+            if ( $auction_product_object instanceof WC_Product ) {
+                $auction_product_object->set_name( "Lote: {$lot_data[ 'numero_do_lote' ]} - Evento: {$post->post_title}" );
+
+                if( is_array( $lot_data[ 'animal_data' ] ) && count( $lot_data[ 'animal_data' ][ 'fotos' ] ) > 0 ) {
+                    $auction_product_object->set_image_id( $lot_data[ 'animal_data' ][ 'fotos' ][ 0 ][ 'ID' ] );
+                }
+
+                // Save it.
                 $auction_product_object->save();
             }
             
             // Update the post metas.
-            update_post_meta( $product_id, 'woo_ua_opening_price', $auction_data[ 'preco_de_abertura' ] );
-            update_post_meta( $product_id, 'woo_ua_lowest_price', $auction_data[ 'menor_preco_para_aceitar' ] );
-            update_post_meta( $product_id, '_regular_price', $auction_data[ 'preco_venda_imediata' ] );
-            update_post_meta( $product_id, '_price', $auction_data[ 'preco_venda_imediata' ] );
+            update_post_meta( $product_id, 'woo_ua_opening_price', $lot_data[ 'preco_de_abertura' ] );
+            update_post_meta( $product_id, 'woo_ua_lowest_price', $lot_data[ 'menor_preco_para_aceitar' ] );
+            update_post_meta( $product_id, '_regular_price', $lot_data[ 'preco_venda_imediata' ] );
+            update_post_meta( $product_id, '_price', $lot_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio' ] );
-            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
         }
