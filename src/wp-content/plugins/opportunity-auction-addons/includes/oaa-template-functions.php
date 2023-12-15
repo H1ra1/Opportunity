@@ -42,8 +42,26 @@ function oaa_single_auction_template( $single ) {
 
 }
 
+function oaa_pre_bid_template() {
+    global $product;
+    
+    $pre_bid_open = oaa_check_if_pre_bid_is_open( $product->id );
+    
+    if( $pre_bid_open ) {
+        remove_action( 'woocommerce_single_product_summary', '00000000000007570000000000000000woocommerce_uwa_auction_bid', 25 );
+        remove_action( 'woocommerce_auction_add_to_cart', '00000000000007570000000000000000woocommerce_uwa_auction_add_to_cart', 25 );
+    }
+		
+    if( method_exists( $product, 'get_type' ) && $product->get_type() == 'auction' ) {
+        wc_get_template( 'templates/woocommerce/single-product/oaa-pre-bid-template.php', array(), OAA_PATH, OAA_PATH );        
+    }
+}
+
 // Add shortcodes.
 add_shortcode( 'oaa_available_auctions', 'oaa_available_auctions_shorcode' );
+
+// Add actions.
+add_action( 'woocommerce_single_product_summary', 'oaa_pre_bid_template', 15 );
 
 // Add filters.
 add_filter( 'single_template', 'oaa_single_auction_template' );

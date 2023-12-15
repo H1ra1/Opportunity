@@ -56,3 +56,13 @@ function oaa_format_money( $number ) {
 
     return $format;
 }
+
+function oaa_now_date_equal_or_bigger( string $date ) {
+    $date_now   = new DateTime( 'now', new DateTimeZone( 'America/Sao_Paulo' ) );
+    $date       = new DateTime( $date, new DateTimeZone( 'America/Sao_Paulo' ) );
+
+    if( $date_now >= $date )
+        return true;
+
+    return false;
+}

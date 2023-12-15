@@ -1,10 +1,10 @@
 <?php
 
-function oaa_table_exists( string $table_name ): bool {
+function oaa_table_exists( string $table_name ) {
     $table_name = WPDB->prefix . $table_name;
 
-    $query = WPDB->prepare( 'SHOW TABLES LIKE %i', $table_name );
-
+    $query = WPDB->prepare( 'SHOW TABLES LIKE %s', $table_name );
+    
     if( ! WPDB->get_var( $query ) == $table_name )
         return false;
 

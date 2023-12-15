@@ -5,7 +5,8 @@ $colorBase2: #0198DA;
 .oaa-auction-cards-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 20px;
+    gap: 30px 20px;
+    justify-content: center;
 }
 
 .oaa-auction-card {
@@ -276,5 +277,39 @@ $colorBase2: #0198DA;
 
     &__auction_lots {
         margin-top: 50px;
+    }
+}
+
+.oaa-pre-bid {
+    &__pre_bid_form {
+        background-color: #FFF;
+        box-shadow: 0 0 2px 2px #0003;
+        border-radius: 2px;
+        width: 100%;
+        padding: 20px;
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            select {
+                padding: 10px;
+                height: 50px;
+                min-width: 300px;
+                text-align: center;
+            }
+    
+            button {
+                background-color: $colorBase2;
+                font-size: 14px;
+                font-weight: 400;
+                color: #FFF;
+                padding: 10px 40px;
+                height: 50px;
+                border: none;
+                outline: none;
+            }
+        }
     }
 }

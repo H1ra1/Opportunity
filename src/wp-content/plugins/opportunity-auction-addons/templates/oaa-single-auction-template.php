@@ -25,7 +25,7 @@
 
                     <div class="oaa-auction-infos__details_list">
                         <div class="list-block">
-                            <p><strong>Prazo para Pré-Lances:</strong></p>
+                            <p><strong>Prazo para Lances:</strong></p>
                             <p>Início: <strong>Terça-feira, 05/12/0023 às 18:00</strong></p>
                             <p>Término: <strong>Terça-feira, 05/12/0023 às 18:00</strong></p>
                         </div>
@@ -43,7 +43,7 @@
 
                         <?php 
                             countdown_clock(
-                                $end_date   = $auction_data[ 'data_de_termino' ],
+                                $end_date   = $auction_data[ 'data_de_termino_lances' ],
                                 $item_id    = $auction_id,
                                 $item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
                             );

@@ -12,6 +12,11 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     if( $pre_bid_already_made )
         return 'Pre bid with this value is already made.';
 
+    $pre_bid_is_open = oaa_check_if_pre_bid_is_open( $auction_id );
+
+    if( ! $pre_bid_is_open )
+        return 'Pre bid is not longer open.';
+
     $inset_on_db = oaa_insert_on_table( 'oaa_pre_bids', array(
         'user_id'       => $user->ID,
         'auction_id'    => $auction->ID,
@@ -74,3 +79,67 @@ function oaa_pre_bid_already_made( int $user_id, int $auction_id, float $bid ): 
 
     return true;
 }
+
+function oaa_check_if_pre_bid_is_open( int $product_id ): bool {
+    $auction_post_id        = get_post_meta( $product_id, 'oaa_auction_product_post_id', true );
+    $auction_post_fields    = get_field( 'auction', $auction_post_id );
+    $pre_bid_date_open      = oaa_now_date_equal_or_bigger( $auction_post_fields[ 'data_de_inicio_pre_lances' ] );
+    $pre_bid_date_close     = oaa_now_date_equal_or_bigger( $auction_post_fields[ 'data_de_termino_pre_lances' ] );
+    $pre_bid_open           = $pre_bid_date_open && ! $pre_bid_date_close ? true : false;
+
+    return $pre_bid_open;
+}
+
+function oaa_get_pre_bid_next_bids_values( int $auction_product_id, float $last_bid = 0 ) {
+    $auction_post_id        = get_post_meta( $auction_product_id, 'oaa_auction_product_post_id', true );
+    $auction_post_fields    = get_field( 'auction', $auction_post_id );
+
+    $next_bids = array();
+    $current_increment = $last_bid + floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+
+    for ( $i = 0; $i < $auction_post_fields[ 'numero_de_proximos_lances' ]; $i++ ) {
+        $next_bids[] = $current_increment;
+        $current_increment += floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+    }
+
+    return $next_bids;
+}
+
+// Ajax functions.
+
+function oaa_new_pre_bid_ajax() {
+    if( wp_verify_nonce( $_POST['nonce'], 'ajax-nonce' ) ) {
+        $bid_value          = esc_html( $_POST[ 'bid_value' ] );
+        $auction_product_id = esc_html( $_POST[ 'auction_product_id' ] );
+
+        if( ! is_user_logged_in() )
+            wp_send_json( array( 'message' => 'User not logged in.' ), 500 );
+
+        $current_user_id    = get_current_user_id();
+        $pre_bid            = oaa_new_pre_bid( $current_user_id, $auction_product_id, $bid_value );
+
+        if( is_string( $pre_bid ) )
+            wp_send_json( array( 'message' => $pre_bid ), 500 );
+
+        wp_send_json( array( 'message' => 'Pre bid included!' ), 200 );
+    }
+
+    wp_die();
+}
+
+function oaa_update_pre_bid_next_bids_values_ajax() {
+    if( wp_verify_nonce( $_POST['nonce'], 'ajax-nonce' ) ) {
+        $last_bid_value     = esc_html( $_POST[ 'last_bid_value' ] );
+        $auction_product_id = esc_html( $_POST[ 'auction_product_id' ] );
+
+        $next_bids = oaa_get_pre_bid_next_bids_values( $auction_product_id, $last_bid_value );
+
+        wp_send_json( array( 'next_bids' => $next_bids ), 200 );
+    }
+
+    wp_die();
+}
+
+// Add actions.
+add_action( 'wp_ajax_oaa_new_pre_bid_ajax', 'oaa_new_pre_bid_ajax' );
+add_action( 'wp_ajax_oaa_update_pre_bid_next_bids_values_ajax', 'oaa_update_pre_bid_next_bids_values_ajax' );

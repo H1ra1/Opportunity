@@ -7,7 +7,7 @@
         <p>Tempo para encerramento:</p>
         <?php 
             countdown_clock(
-				$end_date   = $args[ 'auction_fields' ][ 'data_de_termino' ],
+				$end_date   = $args[ 'auction_fields' ][ 'data_de_termino_lances' ],
 				$item_id    = $args[ 'id' ],
 				$item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
 			);
@@ -19,9 +19,9 @@
     </div>
 
     <div class="oaa-auction-card__term_box">
-        <?php if( ! empty( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) && $args[ 'auction_fields' ][ 'data_de_termino' ] ): ?>
-            <p>Prazo para Pré-Lances:</p>
-            <p><strong><?php esc_html_e( oaa_format_date_only( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) ); ?></strong><span>(<?php esc_html_e( oaa_format_time_only( $args[ 'auction_fields' ][ 'data_de_inicio' ] ) ); ?>)</span> à <strong><?php esc_html_e( oaa_format_date_only( $args[ 'auction_fields' ][ 'data_de_termino' ] ) ); ?></strong><span>(<?php esc_html_e( oaa_format_time_only( $args[ 'auction_fields' ][ 'data_de_termino' ] ) ); ?>)</span></p>
+        <?php if( ! empty( $args[ 'auction_fields' ][ 'data_de_inicio_lances' ] ) && $args[ 'auction_fields' ][ 'data_de_termino_lances' ] ): ?>
+            <p>Prazo para Lances:</p>
+            <p><strong><?php esc_html_e( oaa_format_date_only( $args[ 'auction_fields' ][ 'data_de_inicio_lances' ] ) ); ?></strong><span>(<?php esc_html_e( oaa_format_time_only( $args[ 'auction_fields' ][ 'data_de_inicio_lances' ] ) ); ?>)</span> à <strong><?php esc_html_e( oaa_format_date_only( $args[ 'auction_fields' ][ 'data_de_termino_lances' ] ) ); ?></strong><span>(<?php esc_html_e( oaa_format_time_only( $args[ 'auction_fields' ][ 'data_de_termino_lances' ] ) ); ?>)</span></p>
         <?php endif; ?>
     </div>
 

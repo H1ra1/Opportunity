@@ -49,7 +49,7 @@ if ( ! class_exists( 'OAA' ) ) {
             oaa_include_once( 'includes/oaa-register-taxonomies.php' );
 
             // Add actions.
-            add_action( 'init', array( $this, 'init' ), 10 );
+            add_action( 'init', array( $this, 'init' ), 1 );
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_admin' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
             add_action( 'save_post', array( $this, 'save_post_auction' ), 10, 3 );
@@ -88,11 +88,30 @@ if ( ! class_exists( 'OAA' ) ) {
         }
 
         public function enqueue_scripts_admin() {
+
+            // Scripts
             wp_enqueue_script( 'oaa-admin-scripts', OAA_URL . "assets/js/oaa-admin.js", array( 'jquery' ), $this->version );
         }
 
         public function enqueue_scripts() {
+            $vars = array(
+                'uri'                   => OAA_URL,
+                'ajax_url'              => admin_url( 'admin-ajax.php' ),
+                'nonce'                 => wp_create_nonce( 'ajax-nonce' )
+            );
+
+            // Scripts.
+            wp_enqueue_script( 'oaa-scripts', OAA_URL . "assets/js/oaa.js", array( 'jquery' ), $this->version );
+
+            // Styles.
             wp_enqueue_style( 'oaa-styles', OAA_URL . "assets/css/oaa.min.css", array(), $this->version );
+
+            // Add vars to scripts.
+            wp_localize_script(
+                'oaa-scripts',
+                'main_params',
+                $vars
+            );
         }
 
         public function save_post_auction( int $post_id, WP_Post $post, bool $update ) {
@@ -153,6 +172,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
+            update_post_meta( $product_id, 'oaa_auction_product_post_id', $post->ID );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
 
             return $product_id;
@@ -183,6 +203,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
+            update_post_meta( $product_id, 'oaa_auction_product_post_id', $post->ID );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
         }
 
