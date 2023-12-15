@@ -57,7 +57,11 @@ if ( ! class_exists( 'OAA' ) ) {
 
         public function init() {
 
-            // Call functions.
+            // Include functions.
+            oaa_include_once( 'includes/oaa-db-functions.php' );
+            oaa_include_once( 'includes/oaa-pre-bid-functions.php' );
+
+            // Call core functions.
             $this->create_pages();
             $this->create_database_tables();
         }
