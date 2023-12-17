@@ -1,0 +1,39 @@
+{
+	"name": "hug.reed/jet-form-builder-address-autocomplete",
+	"description": "Premium addon for JetFormBuilder & JetEngine",
+	"minimum-stability": "dev",
+	"type": "project",
+	"require": {
+		"crocoblock/jfb-addon-core": "^1.0",
+		"crocoblock/jfb-addon-core-dev": "^1.0"
+	},
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "hug.reed",
+			"email": "sanko200065@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Jet_FB_Address_Autocomplete\\": "includes/"
+		}
+	},
+	"config": {
+		"jfb-core": {
+			"replace-namespace": {
+				"patterns": [
+					"/^.+\\.(php|lock)$/i",
+					"/^.+installed\\.json$/i"
+				],
+				"search": "JFBCore",
+				"replace": "JetAddressAutocompleteCore"
+			}
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"DevCoreJFB\\ScriptsManager::init"
+		]
+	}
+}
