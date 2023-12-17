@@ -6,6 +6,9 @@
     $auction_id     = get_the_ID();
     $auction_title  = get_the_title();
     $auction_data   = get_field( 'auction', $auction_id );
+    $pre_bid_open   = oaa_check_if_pre_bid_is_open( $auction_id, false );
+
+    // pprint( $auction_data );
 
     get_header();
 ?>
@@ -25,33 +28,77 @@
 
                     <div class="oaa-auction-infos__details_list">
                         <div class="list-block">
-                            <p><strong>Prazo para Lances:</strong></p>
-                            <p>Início: <strong>Terça-feira, 05/12/0023 às 18:00</strong></p>
-                            <p>Término: <strong>Terça-feira, 05/12/0023 às 18:00</strong></p>
+                            <?php if( $pre_bid_open ): ?>
+                                <p><strong>Prazo para Pré Lances:</strong></p>
+                                <p>Início: <strong><?php esc_html_e( oaa_translate_day_name( date( 'l', strtotime( $auction_data[ 'data_de_inicio_pre_lances' ] ) ) ) ) ?>, <?php esc_html_e( date( 'd/m/Y', strtotime( $auction_data[ 'data_de_inicio_pre_lances' ] ) ) ) ?> às <?php esc_html_e( date( 'H:i', strtotime( $auction_data[ 'data_de_inicio_pre_lances' ] ) ) ) ?></strong></p>
+                                <p>Término: <strong><?php esc_html_e( oaa_translate_day_name( date( 'l', strtotime( $auction_data[ 'data_de_termino_pre_lances' ] ) ) ) ) ?>, <?php esc_html_e( date( 'd/m/Y', strtotime( $auction_data[ 'data_de_termino_pre_lances' ] ) ) ) ?> às <?php esc_html_e( date( 'H:i', strtotime( $auction_data[ 'data_de_termino_pre_lances' ] ) ) ) ?></strong></p>
+                            <?php else: ?>
+                                <p><strong>Prazo para Lances:</strong></p>
+                                <p>Início: <strong><?php esc_html_e( oaa_translate_day_name( date( 'l', strtotime( $auction_data[ 'data_de_inicio_lances' ] ) ) ) ) ?>, <?php esc_html_e( date( 'd/m/Y', strtotime( $auction_data[ 'data_de_inicio_lances' ] ) ) ) ?> às <?php esc_html_e( date( 'H:i', strtotime( $auction_data[ 'data_de_inicio_lances' ] ) ) ) ?></strong></p>
+                                <p>Término: <strong><?php esc_html_e( oaa_translate_day_name( date( 'l', strtotime( $auction_data[ 'data_de_termino_lances' ] ) ) ) ) ?>, <?php esc_html_e( date( 'd/m/Y', strtotime( $auction_data[ 'data_de_termino_lances' ] ) ) ) ?> às <?php esc_html_e( date( 'H:i', strtotime( $auction_data[ 'data_de_termino_lances' ] ) ) ) ?></strong></p>
+                            <?php endif; ?>
                         </div>
 
                         <div class="list-block">
                             <p>Transmissão: <strong>Terça-feira, 05/12/0023 às 18:00</strong></p>
-                            <p>Condições: <strong>40 PARCELAS (2+2+2+2+2+30)</strong></p>
+                            <p>Condições: <strong><?php echo esc_html_e( $auction_data[ 'total_de_parcelas' ] ); ?> PARCELAS (<?php echo esc_html_e( $auction_data[ 'condicoes_de_pagamento' ] ); ?>)</strong></p>
                             <p>Comissão de Compra: <strong>8%</strong></p>
-                            <p>Incremento Mínimo: <strong>R$ 30,00</strong></p>
+                            <p>Incremento Mínimo: <strong>R$ <?php echo esc_html_e( number_format( $auction_data[ 'incremento_de_lance' ], 2, ',', '.' ) ); ?></strong></p>
                         </div>
                     </div>
 
                     <div class="oaa-auction-infos__timer_box">
-                        <p>TEMPO PARA ENCERRAMENTO:</p>
+                        <?php if( $pre_bid_open ): ?>
+                            <?php if( oaa_now_date_equal_or_bigger( $auction_data[ 'data_de_inicio_pre_lances' ] ) ): ?>
+                                <p>TEMPO PARA ENCERRAMENTO PRÉ LANCES:</p>
+                            
+                                <?php 
+                                    countdown_clock(
+                                        $end_date   = $auction_data[ 'data_de_termino_pre_lances' ],
+                                        $item_id    = $auction_id,
+                                        $item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
+                                    );
+                                ?>
+                            <?php else: ?>
+                                <p>TEMPO PARA INÍCIO PRÉ LANCES:</p>
+                            
+                                <?php 
+                                    countdown_clock(
+                                        $end_date   = $auction_data[ 'data_de_inicio_pre_lances' ],
+                                        $item_id    = $auction_id,
+                                        $item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
+                                    );
+                                ?>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <?php if( oaa_now_date_equal_or_bigger( $auction_data[ 'data_de_inicio_lances' ] ) ): ?>
+                                <p>TEMPO PARA ENCERRAMENTO LANCES:</p>
 
-                        <?php 
-                            countdown_clock(
-                                $end_date   = $auction_data[ 'data_de_termino_lances' ],
-                                $item_id    = $auction_id,
-                                $item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
-                            );
-                        ?>
+                                <?php 
+                                    countdown_clock(
+                                        $end_date   = $auction_data[ 'data_de_termino_lances' ],
+                                        $item_id    = $auction_id,
+                                        $item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
+                                    );
+                                ?>
+                            <?php else: ?>
+                                <p>TEMPO PARA INÍCIO LANCES:</p>
+
+                                <?php 
+                                    countdown_clock(
+                                        $end_date   = $auction_data[ 'data_de_inicio_lances' ],
+                                        $item_id    = $auction_id,
+                                        $item_class = 'uwa-main-auction-product uwa_auction_product_countdown'   
+                                    );
+                                ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        
                     </div>
 
                     <div class="oaa-auction-infos__menu">
-                        <a href="#">Pré-catálogo</a>
+                        <a href="#">Catálogo</a>
                         <a href="#">Regulamento</a>
                         <a href="#">Informações</a>
                     </div>

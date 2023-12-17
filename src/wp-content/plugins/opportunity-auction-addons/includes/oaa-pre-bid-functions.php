@@ -84,8 +84,13 @@ function oaa_pre_bid_already_made( int $user_id, int $auction_id, float $bid ): 
     return true;
 }
 
-function oaa_check_if_pre_bid_is_open( int $product_id ): bool {
-    $auction_post_id        = get_post_meta( $product_id, 'oaa_auction_product_post_id', true );
+function oaa_check_if_pre_bid_is_open( int $id, bool $product_id = true ): bool {
+    if( $product_id ) {
+        $auction_post_id        = get_post_meta( $id, 'oaa_auction_product_post_id', true );
+    } else {
+        $auction_post_id        = $id;
+    }
+    
     $auction_post_fields    = get_field( 'auction', $auction_post_id );
     $pre_bid_date_open      = oaa_now_date_equal_or_bigger( $auction_post_fields[ 'data_de_inicio_pre_lances' ] );
     $pre_bid_date_close     = oaa_now_date_equal_or_bigger( $auction_post_fields[ 'data_de_termino_pre_lances' ] );
