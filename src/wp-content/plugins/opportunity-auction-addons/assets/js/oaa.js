@@ -25,23 +25,28 @@
     }
 
     function updatePreBidNextBidsValues( lastBid, auctionProductId ) {
-        const PRE_BID_SELECT    = $( '#oaa-pre-bid-form-select' );
-        const DATA              = {
+        const PRE_BID_SELECT            = $( '#oaa-pre-bid-form-select' );
+        const LAST_BID_VALUE_ELEMENT    = $( '.woo-ua-auction-price.starting-bid'  ).find( 'bdi' );
+        const DATA                      = {
             action              : 'oaa_update_pre_bid_next_bids_values_ajax',
             nonce               : main_params.nonce,
             last_bid_value      : lastBid,
             auction_product_id  : auctionProductId
         }
 
+        console.log( LAST_BID_VALUE_ELEMENT );
+
         $.ajax( {
             url     : main_params.ajax_url,
             method  : 'POST',
             data    : DATA
         } ).done( ( response ) => {
+            LAST_BID_VALUE_ELEMENT.html( `<span class="woocommerce-Price-currencySymbol">R$</span> ${ response.current_bid }` );
+
             PRE_BID_SELECT.html( '' );
 
             response.next_bids.forEach( ( nextBid ) => {
-                PRE_BID_SELECT.append( `<option value="${ nextBid }">${ nextBid.toLocaleString( 'pt-br',{ style: 'currency', currency: 'BRL' } ) }</option>` )
+                PRE_BID_SELECT.append( `<option value="${ nextBid }">${ nextBid.toLocaleString( 'pt-br', { style: 'currency', currency: 'BRL' } ) }</option>` )
             } );
         } ).error( ( error ) => console.error( error ) );
     }
