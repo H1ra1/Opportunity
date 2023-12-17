@@ -172,6 +172,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_type', 'normal' );
             update_post_meta( $product_id, 'oaa_auction_product_post_id', $post->ID );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
 
@@ -203,6 +204,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
+            update_post_meta( $product_id, 'woo_ua_auction_type', 'normal' );
             update_post_meta( $product_id, 'oaa_auction_product_post_id', $post->ID );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
         }
