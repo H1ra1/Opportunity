@@ -48,8 +48,8 @@ function oaa_pre_bid_template() {
     $pre_bid_open = oaa_check_if_pre_bid_is_open( $product->id );
     
     if( $pre_bid_open ) {
-        remove_action( 'woocommerce_single_product_summary', '00000000000007570000000000000000woocommerce_uwa_auction_bid', 25 );
-        remove_action( 'woocommerce_auction_add_to_cart', '00000000000007570000000000000000woocommerce_uwa_auction_add_to_cart', 25 );
+        oaa_remove_filters_with_method_name( 'woocommerce_single_product_summary', 'woocommerce_uwa_auction_bid', 25 );
+        oaa_remove_filters_with_method_name( 'woocommerce_auction_add_to_cart', 'woocommerce_uwa_auction_add_to_cart', 25 );
     }
 		
     if( method_exists( $product, 'get_type' ) && $product->get_type() == 'auction' ) {
