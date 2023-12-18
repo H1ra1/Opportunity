@@ -143,7 +143,16 @@ $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
             <p class="oaa-menu-tab-item__title">Histórico Veterinário</p>
 
             <div class="oaa-menu-tab-item__holder">
-                
+                <?php if( ! empty( $auction_lot_animal_data[ 'historico_veterinario_data' ] ) ): ?>
+                    <div class="oaa-menu-tab-item-table">
+                        <?php foreach( $auction_lot_animal_data[ 'historico_veterinario_data' ] as $vet_data ): ?>
+                            <div class="oaa-menu-tab-item-table__item">
+                                <span><?php esc_html_e( $vet_data[ 'titulo' ] ); ?>:</span>
+                                <span><?php esc_html_e( $vet_data[ 'valor' ] ); ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
