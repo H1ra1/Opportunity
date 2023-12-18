@@ -11,7 +11,7 @@ $auction_post_fields        = get_field( 'auction', $auction_post_id );
 $auction_lot_animal_id      = get_post_meta( $auction_product->id, 'oaa_auction_animal_post_id', true );
 $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
 
-// pprint( $auction_lot_animal_data[ 'fotos' ] );
+// pprint( $auction_lot_animal_data );
 
 ?>
 
@@ -60,8 +60,8 @@ $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
                         <?php foreach( $auction_lot_animal_data[ 'fotos' ] as $foto ): ?>
                             <figure class="gallery-item">
                                 <div class="gallery-icon landscape">
-                                    <a data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="203f0e1"
-                                        data-elementor-lightbox-title="FOTO_17476605122023194250"
+                                    <a data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="fotos"
+                                        data-elementor-lightbox-title="<?php esc_html_e( $foto[ 'caption' ] ); ?>"
                                         data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTY3MywidXJsIjoiaHR0cDpcL1wvbG9jYWxob3N0XC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvRk9UT18xNzQ3NjYwNTEyMjAyMzE5NDI1MC0xLmpwZWciLCJzbGlkZXNob3ciOiIyMDNmMGUxIn0%3D"
                                         href="<?php echo esc_url( $foto[ 'url' ] ); ?>"><img
                                             decoding="async" width="150" height="150"
@@ -81,7 +81,13 @@ $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
             <p class="oaa-menu-tab-item__title">Genealogia</p>
 
             <div class="oaa-menu-tab-item__holder">
-                
+                <?php if( ! empty( $auction_lot_animal_data[ 'genealogia' ] ) ): ?>
+                    <img src="<?php echo esc_url( $auction_lot_animal_data[ 'genealogia' ][ 'url' ] ); ?>" alt="<?php echo esc_url( $auction_lot_animal_data[ 'genealogia' ][ 'alt' ] ); ?>">
+                <?php else: ?>
+                    <div class="oaa-menu-tab-item-empty">
+                        <p>Este lote não possui Genealogia!</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -105,7 +111,31 @@ $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
             <p class="oaa-menu-tab-item__title">Raio X</p>
 
             <div class="oaa-menu-tab-item__holder">
-                
+                <?php if( ! empty( $auction_lot_animal_data[ 'raio_x_gallery' ] ) ): ?>
+                    <div class="oaa-image-gallery">
+                        <div class="gallery gallery-size-thumbnail">
+                            <?php foreach( $auction_lot_animal_data[ 'raio_x_gallery' ] as $raio_x ): ?>
+                                <figure class="gallery-item">
+                                    <div class="gallery-icon landscape">
+                                        <a data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="raio_x"
+                                            data-elementor-lightbox-title="<?php echo esc_html_e( $raio_x[ 'caption' ] ); ?>"
+                                            data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTY3MywidXJsIjoiaHR0cDpcL1wvbG9jYWxob3N0XC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvRk9UT18xNzQ3NjYwNTEyMjAyMzE5NDI1MC0xLmpwZWciLCJzbGlkZXNob3ciOiIyMDNmMGUxIn0%3D"
+                                            href="<?php echo esc_url( $raio_x [ 'url' ] ); ?>"><img
+                                                decoding="async" width="150" height="150"
+                                                src="<?php echo esc_url( $raio_x [ 'sizes' ][ 'thumbnail' ] ); ?>"
+                                                class="attachment-thumbnail size-thumbnail" alt=""
+                                                srcset="<?php echo esc_url( $raio_x [ 'sizes' ][ 'thumbnail' ] ); ?> 150w, <?php echo esc_url( $raio_x [ 'sizes' ][ 'woocommerce_thumbnail' ] ); ?> 300w, <?php echo esc_url( $raio_x [ 'sizes' ][ 'woocommerce_gallery_thumbnail' ] ); ?> 100w, <?php echo esc_url( $raio_x [ 'sizes' ][ 'variation_swatches_image_size' ] ); ?> 50w"
+                                                sizes="(max-width: 150px) 100vw, 150px"></a>
+                                    </div>
+                                </figure>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <div class="oaa-menu-tab-item-empty">
+                        <p>Este lote não possui foto de Raio X!</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
