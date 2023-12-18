@@ -51,12 +51,32 @@
         } ).error( ( error ) => console.error( error ) );
     }
 
+    function changeMenuTab( element ) {
+        const CURRENT_TAB           = $( element.currentTarget );
+        const TAB_TO_ACTIVE_TAG     = CURRENT_TAB.attr( 'oaa-menu-tab' );
+        const TAB_TO_ACTIVE_ELEMENT = $( `[oaa-menu-tab-item=${TAB_TO_ACTIVE_TAG}]` );
+        const TABS                  = $( '[oaa-menu-tab]' );
+        const TABS_ITEMS            = $( '[oaa-menu-tab-item]' );
+
+        TABS.removeClass( '--active' );
+        TABS_ITEMS.removeClass( '--active' );
+
+
+        CURRENT_TAB.addClass( '--active' );
+        TAB_TO_ACTIVE_ELEMENT.addClass( '--active' );
+        console.log( TAB_TO_ACTIVE_ELEMENT );
+    }
+
     $( document ).ready( () => {
         console.log( 'OAA Scripts Loaded!' );
 
         // Actions.
         if( $( '[oaa-pre-bid-form]' ).length > 0 ) {
             $( '[oaa-pre-bid-form]' ).submit( preBid );
+        }
+
+        if( $( '[oaa-menu-tab]' ).length > 0 ) {
+            $( '[oaa-menu-tab]' ).click( changeMenuTab );
         }
     } );
 } ( jQuery ) );

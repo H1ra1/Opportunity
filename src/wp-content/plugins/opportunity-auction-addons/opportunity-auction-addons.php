@@ -174,6 +174,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_type', 'normal' );
             update_post_meta( $product_id, 'oaa_auction_product_post_id', $post->ID );
+            update_post_meta( $product_id, 'oaa_auction_animal_post_id', $lot_data[ 'animal' ]->ID );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
 
             return $product_id;
@@ -206,6 +207,7 @@ if ( ! class_exists( 'OAA' ) ) {
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_type', 'normal' );
             update_post_meta( $product_id, 'oaa_auction_product_post_id', $post->ID );
+            update_post_meta( $product_id, 'oaa_auction_animal_post_id', $lot_data[ 'animal' ]->ID );
             update_post_meta( $post->ID, 'oaa_auction_lot_indice', $lot_indice );
         }
 

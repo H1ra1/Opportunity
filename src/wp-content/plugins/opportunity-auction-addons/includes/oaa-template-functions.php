@@ -50,10 +50,20 @@ function oaa_pre_bid_template() {
     if( $pre_bid_open ) {
         oaa_remove_filters_with_method_name( 'woocommerce_single_product_summary', 'woocommerce_uwa_auction_bid', 25 );
         oaa_remove_filters_with_method_name( 'woocommerce_auction_add_to_cart', 'woocommerce_uwa_auction_add_to_cart', 25 );
+        oaa_remove_filters_with_method_name( 'woocommerce_auction_add_to_cart', 'woocommerce_uwa_auction_add_to_cart', 30 );
+        oaa_remove_filters_with_method_name( 'woocommerce_auction_add_to_cart', 'woocommerce_uwa_auction_bid', 25 );
     }
 		
     if( method_exists( $product, 'get_type' ) && $product->get_type() == 'auction' ) {
         wc_get_template( 'templates/woocommerce/single-product/oaa-pre-bid-template.php', array(), OAA_PATH, OAA_PATH );        
+    }
+}
+
+function oaa_bid_menu_template() {
+    global $product;
+
+    if( method_exists( $product, 'get_type' ) && $product->get_type() == 'auction' ) {
+        wc_get_template( 'templates/woocommerce/single-product/oaa-bid-menu-template.php', array(), OAA_PATH, OAA_PATH ); 
     }
 }
 
@@ -62,6 +72,14 @@ add_shortcode( 'oaa_available_auctions', 'oaa_available_auctions_shorcode' );
 
 // Add actions.
 add_action( 'woocommerce_single_product_summary', 'oaa_pre_bid_template', 15 );
+add_action( 'woocommerce_after_single_product_summary', 'oaa_bid_menu_template', 2 );
 
 // Add filters.
 add_filter( 'single_template', 'oaa_single_auction_template' );
+
+// Remove actions.
+add_action( 'woocommerce_after_single_product_summary', function() {
+    remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
+    remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
+}, 2 );
+

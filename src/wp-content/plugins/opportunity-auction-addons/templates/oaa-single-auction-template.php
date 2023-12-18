@@ -9,6 +9,7 @@
     $pre_bid_open   = oaa_check_if_pre_bid_is_open( $auction_id, false );
 
     // pprint( $auction_data );
+    pprint( $GLOBALS[ 'wp_filter' ][ 'woocommerce_after_single_product_summary' ] );
 
     get_header();
 ?>

@@ -365,4 +365,73 @@ $colorBase2: #0198DA;
     }
 }
 
+.oaa-bid-menu {
+    clear: both;
+    width: 100%;
+
+    &__menu_tabs {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border-bottom: 1px solid $colorBase1;
+
+        .oaa-menu-tab {
+            padding: 10px;
+            cursor: pointer;
+
+            p {
+                font-size: 14px;
+                color: $colorBase1;
+                margin: 0;
+                user-select: none;
+            }
+
+            &.--active {
+                background-color: $colorBase1;
+                border-radius: 2px 2px 0 0;
+
+                p {
+                    color: #FFF;
+                }
+            }
+        }
+    }
+
+    &__menu_tabs_items {
+        .oaa-menu-tab-item {
+            display: none;
+            padding: 5px;
+
+            &__title {
+                font-size: 18px;
+                color: $colorBase1;
+                padding: 10px 0;
+            }
+
+            &__holder {
+                .oaa-menu-tab-item-video-holder {
+                    aspect-ratio: 1/.5;
+                }
+
+                .oaa-image-gallery {
+                    padding: 15px 0;
+
+                    .gallery {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 15px;
+                    }
+                }
+            }
+
+            &.--active {
+                display: block;
+            }
+        }
+    }
+}
+
 // Default classes.
+.woocommerce-product-gallery {
+    width: 30% !important;
+}
