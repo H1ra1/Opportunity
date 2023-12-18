@@ -52,7 +52,7 @@ $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
 
             <div class="oaa-menu-tab-item__holder">
                 <div class="oaa-menu-tab-item-video-holder">
-                    <iframe width="100%" height="100%" src="<?php echo esc_url( $auction_lot_animal_data[ 'video' ] ); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe width="100%" height="100%" src="<?php echo esc_url( "https://www.youtube.com/embed/" . oaa_get_yt_video_id( $auction_lot_animal_data[ 'video' ] ) ); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
 
                 <div class="oaa-image-gallery">

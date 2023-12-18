@@ -114,3 +114,9 @@ function oaa_translate_day_name( string $day ) {
             break;
     }
 }
+
+function oaa_get_yt_video_id( string $url ) {
+    preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match );
+
+    return $match[1];
+}
