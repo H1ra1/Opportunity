@@ -95,7 +95,6 @@ $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
             <p class="oaa-menu-tab-item__title">Comentários</p>
 
             <div class="oaa-menu-tab-item__holder">
-                
             </div>
         </div>
 

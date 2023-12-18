@@ -331,35 +331,78 @@ $colorBase2: #0198DA;
     }
 }
 
-.oaa-pre-bid {
-    &__pre_bid_form {
-        background-color: #FFF;
-        box-shadow: 0 0 2px 2px #0003;
-        border-radius: 2px;
-        width: 100%;
-        padding: 20px;
+.oaa-bid-template {
+    display: flex;
+    justify-content: space-between;
 
-        form {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            select {
-                padding: 10px;
-                height: 50px;
-                min-width: 300px;
-                text-align: center;
-            }
-    
-            button {
-                background-color: $colorBase2;
-                font-size: 14px;
-                font-weight: 400;
+    &__infos {
+        .oaa-bid-template-title {
+            span {
                 color: #FFF;
-                padding: 10px 40px;
-                height: 50px;
-                border: none;
-                outline: none;
+                font-size: 12px;
+                background-color: $colorBase2;
+                padding: 2px 10px;
+            }
+
+            p {
+                color: $colorBase1;
+                font-size: 22px;
+            }
+        }
+
+        .oaa-bid-template-list {
+            .list-block {
+                margin-bottom: 10px;
+    
+                p {
+                    font-size: 12px;
+                    font-weight: 400;
+                    color: gray;
+                    margin: 0;
+    
+                    strong {
+                        color: rgb(102, 102, 102);
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+
+    &__bid_holder {
+        .oaa-pre-bid {
+            &__pre_bid_form {
+                background-color: #FFF;
+                box-shadow: 0 0 2px 2px #0003;
+                border-radius: 2px;
+                width: 100%;
+                padding: 20px 10px;
+        
+                form {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 15px;
+        
+                    select {
+                        padding: 10px;
+                        height: 50px;
+                        min-width: 300px;
+                        text-align: center;
+                        outline: none;
+                    }
+            
+                    button {
+                        background-color: $colorBase2;
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: #FFF;
+                        padding: 10px 40px;
+                        height: 50px;
+                        border: none;
+                        outline: none;
+                    }
+                }
             }
         }
     }
@@ -474,4 +517,8 @@ $colorBase2: #0198DA;
 // Default classes.
 .woocommerce-product-gallery {
     width: 30% !important;
+}
+
+.summary.entry-summary {
+    width: 68% !important;
 }
