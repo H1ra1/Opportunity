@@ -15,7 +15,7 @@ $auction_lot_animal_post    = get_post( $auction_lot_animal_id );
 $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
 $auction_lot_indice         = get_post_meta( $auction_post_id, 'oaa_auction_lot_indice', true );
 $auction_lot_data           = $auction_post_fields[ 'lotes' ][ $auction_lot_indice ];
-$next_bids                  = oaa_get_pre_bid_next_bids_values( $auction_product->id );
+$next_bids                  = oaa_get_bid_next_bids_values( $auction_product->id );
 ?>
 
 <section class="oaa-bid-template">

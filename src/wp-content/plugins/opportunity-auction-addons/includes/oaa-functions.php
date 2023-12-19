@@ -29,3 +29,31 @@ function oaa_get_auction_lot_data( int $auction_id, int $lot_id ) {
 
     return $lot_data;
 }
+
+function oaa_get_bid_next_bids_values( int $auction_product_id, float $last_bid = 0 ) {
+    $auction_post_id        = get_post_meta( $auction_product_id, 'oaa_auction_product_post_id', true );
+    $auction_post_fields    = get_field( 'auction', $auction_post_id );
+    $current_bid            = get_post_meta( $auction_product_id, 'woo_ua_auction_current_bid', true );
+    $opening_price          = get_post_meta( $auction_product_id, 'woo_ua_opening_price', true );
+
+    $next_bids = array();
+
+    if( $last_bid == 0 ) {
+        $current_bid        = $current_bid == null || empty( $current_bid ) ? 0 : $current_bid;
+
+        if( $current_bid == 0 ) {
+            $current_increment  = floatval( $opening_price );
+        } else {
+            $current_increment  = floatval( $current_bid ) + floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+        }
+    } else {
+        $current_increment = floatval( $last_bid ) + floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+    }
+
+    for ( $i = 0; $i < $auction_post_fields[ 'numero_de_proximos_lances' ]; $i++ ) {
+        $next_bids[] = $current_increment;
+        $current_increment += floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+    }
+
+    return $next_bids;
+}

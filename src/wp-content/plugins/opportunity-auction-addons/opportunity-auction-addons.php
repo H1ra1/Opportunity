@@ -60,6 +60,7 @@ if ( ! class_exists( 'OAA' ) ) {
 
             // Include functions.
             oaa_include_once( 'includes/oaa-db-functions.php' );
+            oaa_include_once( 'includes/oaa-bid-functions.php' );
             oaa_include_once( 'includes/oaa-pre-bid-functions.php' );
 
             // Call core functions.

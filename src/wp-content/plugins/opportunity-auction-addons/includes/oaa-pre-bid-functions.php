@@ -99,34 +99,6 @@ function oaa_check_if_pre_bid_is_open( int $id, bool $product_id = true ): bool 
     return $pre_bid_open;
 }
 
-function oaa_get_pre_bid_next_bids_values( int $auction_product_id, float $last_bid = 0 ) {
-    $auction_post_id        = get_post_meta( $auction_product_id, 'oaa_auction_product_post_id', true );
-    $auction_post_fields    = get_field( 'auction', $auction_post_id );
-    $current_bid            = get_post_meta( $auction_product_id, 'woo_ua_auction_current_bid', true );
-    $opening_price          = get_post_meta( $auction_product_id, 'woo_ua_opening_price', true );
-
-    $next_bids = array();
-
-    if( $last_bid == 0 ) {
-        $current_bid        = $current_bid == null || empty( $current_bid ) ? 0 : $current_bid;
-
-        if( $current_bid == 0 ) {
-            $current_increment  = $opening_price;
-        } else {
-            $current_increment  = $current_bid + floatval( $auction_post_fields[ 'incremento_de_lance' ] );
-        }
-    } else {
-        $current_increment = $last_bid + floatval( $auction_post_fields[ 'incremento_de_lance' ] );
-    }
-
-    for ( $i = 0; $i < $auction_post_fields[ 'numero_de_proximos_lances' ]; $i++ ) {
-        $next_bids[] = $current_increment;
-        $current_increment += floatval( $auction_post_fields[ 'incremento_de_lance' ] );
-    }
-
-    return $next_bids;
-}
-
 // Ajax functions.
 
 function oaa_new_pre_bid_ajax() {
@@ -153,19 +125,17 @@ function oaa_update_pre_bid_next_bids_values_ajax() {
     if( wp_verify_nonce( $_POST['nonce'], 'ajax-nonce' ) ) {
         $last_bid_value     = esc_html( $_POST[ 'last_bid_value' ] );
         $auction_product_id = esc_html( $_POST[ 'auction_product_id' ] );
-        $opening_price      = get_post_meta( $auction_product_id, 'woo_ua_opening_price', true );
-        $next_bid_value     = $opening_price + $last_bid_value;
 
-        $next_bids = oaa_get_pre_bid_next_bids_values( $auction_product_id, $next_bid_value );
+        $next_bids = oaa_get_bid_next_bids_values( $auction_product_id, $last_bid_value );
 
 
-        update_post_meta( $auction_product_id, 'woo_ua_opening_price', $next_bid_value );
-        update_post_meta( $auction_product_id, 'woo_ua_auction_current_bid', $next_bid_value );
+        update_post_meta( $auction_product_id, 'woo_ua_opening_price', $last_bid_value );
+        update_post_meta( $auction_product_id, 'woo_ua_auction_current_bid', $last_bid_value );
 
         wp_send_json( array( 
             'next_bids'         => $next_bids, 
             'last_bid_value'    => $last_bid_value,
-            'current_bid'       => number_format( $next_bid_value, 2, ',', '.' )
+            'current_bid'       => number_format( $last_bid_value, 2, ',', '.' )
         ), 200 );
     }
 
