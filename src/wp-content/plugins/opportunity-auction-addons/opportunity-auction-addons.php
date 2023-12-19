@@ -53,6 +53,7 @@ if ( ! class_exists( 'OAA' ) ) {
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_admin' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
             add_action( 'save_post', array( $this, 'save_post_auction' ), 10, 3 );
+            add_action( 'admin_menu', array( $this, 'remove_menu_pages_for_user_roles' ) );
         }
 
         public function init() {
@@ -64,6 +65,7 @@ if ( ! class_exists( 'OAA' ) ) {
             // Call core functions.
             $this->create_pages();
             $this->create_database_tables();
+            $this->create_user_roles();
         }
 
         private function create_pages() {
@@ -232,6 +234,62 @@ if ( ! class_exists( 'OAA' ) ) {
 
             foreach( $queries as $query ) {
                 dbDelta( $query );
+            }
+        }
+
+        private function create_user_roles() {
+            add_role(
+                'simplified_administrator',
+                __( 'Simplified Administrator' ),
+                array(
+                    'read'                      => true,
+                    'edit_posts'                => true,
+                    'delete_posts'              => true,
+                    'publish_posts'             => true,
+                    'upload_files'              => true,
+                    'create_users'              => true,
+                    'delete_users '             => true,
+                    'list_users'                => true,
+                    'remove_users'              => true,
+                    'edit_users'                => true,
+                    'manage_categories'         => true,
+                    'edit_others_posts'         => true,
+                    'edit_published_posts'      => true,
+                    'edit_pages'                => true,
+                    'edit_others_pages'         => true,
+                    'edit_published_pages'      => true,
+                    'publish_pages'             => true,
+                    'delete_pages'              => true,
+                    'delete_others_pages'       => true,
+                    'delete_published_pages'    => true,
+                    'delete_others_posts'       => true,
+                    'delete_private_posts'      => true,
+                    'edit_private_posts'        => true,
+                    'read_private_posts'        => true,
+                    'delete_private_pages'      => true,
+                    'edit_private_pages'        => true,
+                    'read_private_pages'        => true,
+                    'promote_users'             => true,
+                    'read_product'              => true,
+                    'publish_products'          => true,
+                    'manage_woocommerce'        => true,
+                    'read_private_products'     => true,
+                )
+            );
+
+            // remove_role( 'simplified_administrator' );
+        }
+
+        public function remove_menu_pages_for_user_roles() {
+            if( is_user_logged_in() ) {
+
+                if( current_user_can( 'simplified_administrator' ) ) {
+                    remove_menu_page( 'tools.php' );
+                    remove_menu_page( 'wpseo_workouts' );
+                    remove_menu_page( 'edit.php?post_type=elementor_library' );
+                    remove_menu_page( 'woocommerce-marketing' );
+                    remove_menu_page( 'woocommerce' );
+                }
             }
         }
     }
