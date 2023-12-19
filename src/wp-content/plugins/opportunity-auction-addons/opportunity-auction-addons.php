@@ -221,11 +221,12 @@ if ( ! class_exists( 'OAA' ) ) {
 
             $queries = array(
                 'oaa_pre_bids'  => "
-                    CREATE TABLE IF NOT EXISTS {$prefix}`oaa_pre_bids` (
+                    CREATE TABLE IF NOT EXISTS `{$prefix}oaa_pre_bids` (
                         id bigint NOT NULL AUTO_INCREMENT,
                         user_id bigint NOT NULL,
                         auction_id bigint NOT NULL,
                         bid decimal(32,4) NULL,
+                        ip varchar(32) NULL,
                         date timestamp NOT NULL,
                         PRIMARY KEY ( id )
                     ) {$charset_collate}
