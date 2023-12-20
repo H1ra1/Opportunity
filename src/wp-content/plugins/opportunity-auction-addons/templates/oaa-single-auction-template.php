@@ -16,7 +16,7 @@
         <div class="oaa-single-auction">
             <section class="oaa-single-auction__auction_holder fxb-row fxb-row-col-sm fxb-row-col-md">
                 <div class="oaa-auction-thumb fxb-col fxb fxb-center-y fxb-center-x">
-                    <img src="<?php echo esc_url( $auction_data[ 'capa_do_leilao' ][ 'url' ] ); ?>" alt="<?php echo esc_attr( ! empty( $auction_data[ 'capa_do_leilao' ][ 'alt' ] ) ? $auction_data[ 'capa_do_leilao' ][ 'alt' ] : $auction_title ); ?>">
+                    <img src="<?php echo esc_url( $auction_data[ 'banner_do_leilao' ][ 'url' ] ); ?>" alt="<?php echo esc_attr( ! empty( $auction_data[ 'banner_do_leilao' ][ 'alt' ] ) ? $auction_data[ 'banner_do_leilao' ][ 'alt' ] : $auction_title ); ?>">
                 </div>
 
                 <div class="oaa-auction-infos fxb-col">

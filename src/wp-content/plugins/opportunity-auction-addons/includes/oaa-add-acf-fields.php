@@ -27,7 +27,7 @@ function oaa_add_acf_fields() {
                         array(
                             'key' => 'field_657610e2693b4',
                             'label' => 'Capa do leilão',
-                            'name' => 'capa_do_leilao',
+                            'name' => 'banner_do_leilao',
                             'aria-label' => '',
                             'type' => 'image',
                             'instructions' => '',

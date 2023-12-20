@@ -1,6 +1,6 @@
 <div class="oaa-auction-card">
     <a href="<?php echo esc_url( $args[ 'url' ] ); ?>" class="oaa-auction-card__thumb">
-        <img src="<?php echo esc_url( $args[ 'auction_fields' ][ 'capa_do_leilao' ][ 'url' ] ); ?>" alt="<?php echo esc_attr( ! empty( $args[ 'auction_fields' ][ 'capa_do_leilao' ][ 'alt' ] ) ? $args[ 'auction_fields' ][ 'capa_do_leilao' ][ 'alt' ] : $args[ 'title' ] ); ?>">
+        <img src="<?php echo esc_url( $args[ 'auction_fields' ][ 'banner_do_leilao' ][ 'url' ] ); ?>" alt="<?php echo esc_attr( ! empty( $args[ 'auction_fields' ][ 'banner_do_leilao' ][ 'alt' ] ) ? $args[ 'auction_fields' ][ 'banner_do_leilao' ][ 'alt' ] : $args[ 'title' ] ); ?>">
     </a>
 
     <div class="oaa-auction-card__timer_box">
