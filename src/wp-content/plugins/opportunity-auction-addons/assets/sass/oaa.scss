@@ -316,11 +316,15 @@ $colorBase2: #0198DA;
                 padding: 10px 20px;
                 background-color: $colorBase1;
 
-                a {
+                button {
                     font-size: 12px;
                     color: #FFF;
                     text-decoration: none;
                     text-transform: uppercase;
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
                 }
             }
         }
@@ -511,6 +515,102 @@ $colorBase2: #0198DA;
                 display: block;
             }
         }
+    }
+}
+
+.oaa-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0004;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+    z-index: 200;
+
+    .oaa-modal {
+        position: relative;
+        background-color: #FFF;
+        box-shadow: 0 0 4px 2px #0002;
+        width: 70%;
+        max-width: 1000px;
+        height: 90%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        display: none;
+
+        /* ===== Scrollbar CSS ===== */
+        /* Firefox */
+        scrollbar-width: auto;
+        scrollbar-color: $colorBase1 #FFF;
+
+        /* Chrome, Edge, and Safari */
+        &::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #FFF;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $colorBase1;
+            border-radius: 10px;
+            border: 3px solid #FFF;
+        }
+
+        &__header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            border-bottom: 1px solid #cecece;
+            padding: 10px 15px;
+            background-color: #FFF;
+
+            p {
+                font-size: 20px;
+                color: $colorBase1;
+                max-width: 90%;
+                margin: 0;
+            }
+
+            button {
+                background-color: #818598;
+                outline: none;
+                border: none;
+                color: #FFF;
+                font-size: 20px;
+                font-weight: 600;
+                margin: 0;
+                transition: all .2s ease-in-out;
+                padding: 4px 14px 6px 14px;
+
+                &:hover {
+                    background-color: $colorBase1;
+                    color: #FFF;
+                }
+            }
+        }
+
+        &__body {
+            padding: 15px;
+
+            object {
+                padding-bottom: 10px;
+            }
+        }
+    }
+
+    &.--active {
+        display: flex;
     }
 }
 

@@ -67,6 +67,33 @@
         console.log( TAB_TO_ACTIVE_ELEMENT );
     }
 
+    function oaaControlModal( $element ) {7
+        const CURENT_BUTTON         = $( $element.currentTarget );
+        const ID                    = CURENT_BUTTON.attr( 'oaa-modal-open' );
+        const MODAL_TO_ACTIVE       = $( `[oaa-modal=${ ID }]` );
+        const MODAL_BOX             = MODAL_TO_ACTIVE.find( '.oaa-modal' );
+        const CURRENT_CLOSE_BUTTON  = MODAL_TO_ACTIVE.find( '[oaa-modal-close]' );
+
+        MODAL_TO_ACTIVE.addClass( '--active' );
+        MODAL_BOX.fadeIn( 'slow' );
+
+        CURRENT_CLOSE_BUTTON.click( () => {
+            MODAL_BOX.fadeOut( 'slow', () => {
+                MODAL_TO_ACTIVE.removeClass( '--active' );
+            } );
+        } );
+
+        MODAL_TO_ACTIVE.click( ( $event ) => {
+            $event.stopPropagation();
+
+            if( !$( $event.target ).hasAttr( 'oaa-modal' ) ) return;
+
+            MODAL_BOX.fadeOut( 'slow', () => {
+                MODAL_TO_ACTIVE.removeClass( '--active' );
+            } );
+        } );
+    }
+
     $( document ).ready( () => {
         console.log( 'OAA Scripts Loaded!' );
 
@@ -77,6 +104,10 @@
 
         if( $( '[oaa-menu-tab]' ).length > 0 ) {
             $( '[oaa-menu-tab]' ).click( changeMenuTab );
+        }
+
+        if( $( '[oaa-modal-open]' ).length > 0 ) {
+            $( '[oaa-modal-open]' ).click( oaaControlModal );
         }
     } );
 } ( jQuery ) );
