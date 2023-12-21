@@ -39,9 +39,9 @@
 
                         <div class="list-block">
                             <p>Transmissão: <strong>Terça-feira, 05/12/0023 às 18:00</strong></p>
-                            <p>Condições: <strong><?php echo esc_html_e( $auction_data[ 'total_de_parcelas' ] ); ?> PARCELAS (<?php echo esc_html_e( $auction_data[ 'condicoes_de_pagamento' ] ); ?>)</strong></p>
-                            <p>Comissão de Compra: <strong>8%</strong></p>
-                            <p>Incremento Mínimo: <strong>R$ <?php echo esc_html_e( number_format( $auction_data[ 'incremento_de_lance' ], 2, ',', '.' ) ); ?></strong></p>
+                            <p>Condições: <strong><?php esc_html_e( $auction_data[ 'total_de_parcelas' ] ); ?> PARCELAS (<?php echo esc_html_e( $auction_data[ 'condicoes_de_pagamento' ] ); ?>)</strong></p>
+                            <?php echo ! empty( $auction_data[ 'comissao_de_compra' ] ) ? "<p>Comissão de Compra: <strong>{$auction_data[ 'comissao_de_compra' ]}%</strong></p>" : ''; ?>
+                            <p>Incremento Mínimo: <strong>R$ <?php esc_html_e( number_format( $auction_data[ 'incremento_de_lance' ], 2, ',', '.' ) ); ?></strong></p>
                         </div>
                     </div>
 
