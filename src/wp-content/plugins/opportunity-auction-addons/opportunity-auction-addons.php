@@ -279,6 +279,14 @@ if ( ! class_exists( 'OAA' ) ) {
                 )
             );
 
+            add_role(
+                'assessor',
+                __( 'Assessor' ),
+                array(
+                    'read'  => false,
+                )
+            );
+
             // remove_role( 'simplified_administrator' );
         }
 
