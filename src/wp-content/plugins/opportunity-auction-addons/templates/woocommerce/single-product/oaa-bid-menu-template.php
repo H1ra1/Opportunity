@@ -51,9 +51,11 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
             <p class="oaa-menu-tab-item__title">Fotos / Vídeos</p>
 
             <div class="oaa-menu-tab-item__holder">
-                <div class="oaa-menu-tab-item-video-holder">
-                    <iframe width="100%" height="100%" src="<?php echo esc_url( "https://www.youtube.com/embed/" . oaa_get_yt_video_id( $auction_lot_animal_data[ 'video' ] ) ); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
+                <?php if( ! empty( $auction_lot_animal_data[ 'video' ] ) ): ?>
+                    <div class="oaa-menu-tab-item-video-holder">
+                        <iframe width="100%" height="100%" src="<?php echo esc_url( "https://www.youtube.com/embed/" . oaa_get_yt_video_id( $auction_lot_animal_data[ 'video' ] ) ); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                <?php endif; ?>
 
                 <div class="oaa-image-gallery">
                     <div class="gallery gallery-size-thumbnail">
@@ -150,6 +152,10 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
                                 <span><?php esc_html_e( $vet_data[ 'valor' ] ); ?></span>
                             </div>
                         <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="oaa-menu-tab-item-empty">
+                        <p>Este lote não possui Histórico Veterinário!</p>
                     </div>
                 <?php endif; ?>
             </div>

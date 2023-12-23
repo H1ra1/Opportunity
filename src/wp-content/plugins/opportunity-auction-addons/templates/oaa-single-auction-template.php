@@ -111,19 +111,22 @@
                         <?php oaa_get_template( 'templates/oaa-modal-template', array(
                             'modal_id'      => 'oaa-catalago',
                             'modal_title'   => "Catálogo - {$auction_title}",
-                            'pdf'           => $auction_data[ 'catalogo_em_pdf' ][ 'url' ]
+                            'pdf'           => $auction_data[ 'catalogo_em_pdf' ][ 'url' ],
+                            'empty_message' => 'Nenhum Catálogo cadastrado.'
                         ) ); ?>
 
                         <?php oaa_get_template( 'templates/oaa-modal-template', array(
                             'modal_id'      => 'oaa-regulamento',
                             'modal_title'   => "Regulamento - {$auction_title}",
-                            'body'          => $auction_data[ 'regulamento_do_evento' ]
+                            'body'          => $auction_data[ 'regulamento_do_evento' ],
+                            'empty_message' => 'Nenhum Regulamento cadastrado.'
                         ) ); ?>
 
                         <?php oaa_get_template( 'templates/oaa-modal-template', array(
                             'modal_id'      => 'oaa-informacoes',
                             'modal_title'   => "Informações - {$auction_title}",
-                            'body'          => $auction_data[ 'informacoes_gerais' ]
+                            'body'          => $auction_data[ 'informacoes_gerais' ],
+                            'empty_message' => 'Nenhuma Informação cadastrada.'
                         ) ); ?>
                     </div>
                 </div>

@@ -675,6 +675,14 @@ $colorBase2: #0198DA;
                 padding-bottom: 10px;
             }
         }
+
+        .oaa-modal-empty {
+            p {
+                font-size: 20px;
+                color: $colorBase1;
+                text-align: center;
+            }
+        }
     }
 
     &.--active {
