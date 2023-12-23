@@ -11,10 +11,8 @@ $auction_post_id            = get_post_meta( $auction_product->id, 'oaa_auction_
 $auction_post_fields        = get_field( 'auction', $auction_post_id );
 $auction_lot_animal_id      = get_post_meta( $auction_product->id, 'oaa_auction_animal_post_id', true );
 $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
-$auction_lot_bids           = oaa_get_bids_from_user_on_auction( $user_id, $auction_product->id );
-
-// pprint( $auction_lot_animal_data );
-
+$pre_bid_open               = oaa_check_if_pre_bid_is_open( $auction_product->id );
+$auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auction( $user_id, $auction_product->id ) : oaa_get_bids_from_user_on_auction( $user_id, $auction_product->id );
 ?>
 
 <section class="oaa-bid-menu">
@@ -162,7 +160,8 @@ $auction_lot_bids           = oaa_get_bids_from_user_on_auction( $user_id, $auct
 
             <div class="oaa-menu-tab-item__holder">
                 <?php oaa_get_template( 'templates/oaa-bids-historic-template', array(
-                    'bids'  => $auction_lot_bids
+                    'bids'          => $auction_lot_bids,
+                    'pre_bid_open'  => $pre_bid_open
                  ) ); ?>
             </div>
         </div>
