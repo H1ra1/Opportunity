@@ -34,11 +34,11 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     return true;
 }
 
-function oaa_get_pre_bids_from_user_on_auction( int $user_id, int $auction_id ): array | bool {
+function oaa_get_pre_bids_from_user_on_auction( int $user_id, int $auction_id ): array {
     $table_name = WPDB->prefix . 'oaa_pre_bids';
 
     $prepare_query  = WPDB->prepare( 
-        "SELECT * FROM %i WHERE user_id = %d AND auction_id = %d", 
+        "SELECT * FROM %i AS pb WHERE pb.user_id = %d AND pb.auction_id = %d ORDER BY pb.date DESC", 
         $table_name,
         WPDB->esc_like( $user_id ),
         WPDB->esc_like( $auction_id ),
@@ -46,7 +46,7 @@ function oaa_get_pre_bids_from_user_on_auction( int $user_id, int $auction_id ):
     $pre_bids_query = oaa_execute_query( $prepare_query );
 
     if( $pre_bids_query == null )
-        return false;
+        return [];
 
     $user_data     = get_user_by( 'id', $user_id );
     $pre_bids_data = array();
@@ -57,7 +57,8 @@ function oaa_get_pre_bids_from_user_on_auction( int $user_id, int $auction_id ):
             'user_id'       => $pre_bid->user_id,
             'auction_id'    => $pre_bid->auction_id,
             'bid'           => number_format( $pre_bid->bid, 2, ',', '.' ),
-            'date'          => date( 'd/m/y H:i:s', strtotime( $pre_bid->date ) ),
+            'date'          => date( 'd/m/Y', strtotime( $pre_bid->date ) ),
+            'time'          => date( 'H:i:s', strtotime( $pre_bid->date ) ),
             'name'          => $user_data->data->user_nicename,
             'email'         => $user_data->data->user_email,
         ];

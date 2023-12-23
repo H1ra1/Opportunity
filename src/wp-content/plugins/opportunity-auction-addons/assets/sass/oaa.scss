@@ -682,6 +682,37 @@ $colorBase2: #0198DA;
     }
 }
 
+.oaa-bids-historic {
+    table {
+        thead {
+            tr {
+                th {
+                    border: none;
+                    border-bottom: 2px solid #d5d5d5;
+                    border-block-start: none !important;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    border: none;
+                    text-align: center;
+
+                    &:nth-child( 1 ) {
+                        font-weight: 700;
+                    }
+                }
+
+                &:nth-child( odd ) {
+                    background-color: #f8f8f8;
+                }
+            }
+        }
+    }
+}
+
 // Default classes.
 .woocommerce-product-gallery {
     width: 30% !important;
