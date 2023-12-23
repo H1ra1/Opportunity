@@ -17,6 +17,7 @@ $auction_lot_indice         = get_post_meta( $auction_post_id, 'oaa_auction_lot_
 $auction_lot_data           = $auction_post_fields[ 'lotes' ][ $auction_lot_indice ];
 $next_bids                  = oaa_get_bid_next_bids_values( $auction_product->id );
 $current_bid_value          = oaa_get_current_bid_value( $auction_product->id );
+$bid_started                = get_post_meta( $auction_product->id, 'woo_ua_auction_current_bid', true );
 
 ?>
 
@@ -44,7 +45,7 @@ $current_bid_value          = oaa_get_current_bid_value( $auction_product->id );
         <?php if( $pre_bid_open ): ?>
             <div class="oaa-bid">
                 <div class="oaa-bid__infos">
-                    <p class="oaa-bid-title">Pré Lance Atual</p>
+                    <p class="oaa-bid-title"><?php esc_html_e( $bid_started ? 'Pré Lance Atual' : 'Preço de Abertura' ); ?></p>
                     <div class="oaa-bid-price">
                         <span class="oaa-bid-price-value">R$ <?php esc_html_e( $current_bid_value ); ?></span>
                         <span class="oaa-bid-price-installments">
