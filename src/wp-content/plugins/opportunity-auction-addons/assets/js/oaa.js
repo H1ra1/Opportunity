@@ -19,29 +19,52 @@
             method  : 'POST',
             data    : DATA
         } ).done( ( response ) => {
-            updatePreBidNextBidsValues( BID_VALUE, AUCTION_PRODUCT_ID );
-            console.log( response );
+            if( response.success )
+                updateBidNextBidsValues( BID_VALUE, AUCTION_PRODUCT_ID );
         } ).error( ( error ) => console.error( error ) );
     }
 
-    function updatePreBidNextBidsValues( lastBid, auctionProductId ) {
-        const PRE_BID_SELECT            = $( '#oaa-pre-bid-form-select' );
-        const LAST_BID_VALUE_ELEMENT    = $( '.woo-ua-auction-price.starting-bid'  ).find( 'bdi' );
+    function bid( $event ) {
+        $event.preventDefault();
+        
+        const FORM                  = $( $event.currentTarget );
+        const SELECT                = FORM.find( 'select' );
+        const BID_VALUE             = SELECT.val();
+        const AUCTION_PRODUCT_ID    = FORM.attr( 'oaa-bid-form' );
+        const DATA                  = {
+            action              : 'uwa_ajax_placed_bid',
+            nonce               : main_params.nonce,
+            uwa_bid_value       : BID_VALUE,
+            uwa_place_bid       : AUCTION_PRODUCT_ID
+        }
+
+        $.ajax( {
+            url     : main_params.ajax_url,
+            method  : 'POST',
+            data    : DATA,
+            dataType: 'json'
+        } ).done( ( response ) => {
+            if( response.allstatus == 1 )
+                updateBidNextBidsValues( BID_VALUE, AUCTION_PRODUCT_ID );
+        } ).error( ( error ) => console.error( error ) );
+    }
+
+    function updateBidNextBidsValues( lastBid, auctionProductId ) {
+        const PRE_BID_SELECT            = $( '#oaa-bid-form-select' );
+        const LAST_BID_VALUE_ELEMENT    = $( '.oaa-bid-price-value'  );
         const DATA                      = {
-            action              : 'oaa_update_pre_bid_next_bids_values_ajax',
+            action              : 'oaa_update_bid_next_bids_values_ajax',
             nonce               : main_params.nonce,
             last_bid_value      : lastBid,
             auction_product_id  : auctionProductId
         }
-
-        console.log( LAST_BID_VALUE_ELEMENT );
 
         $.ajax( {
             url     : main_params.ajax_url,
             method  : 'POST',
             data    : DATA
         } ).done( ( response ) => {
-            LAST_BID_VALUE_ELEMENT.html( `<span class="woocommerce-Price-currencySymbol">R$</span> ${ response.current_bid }` );
+            LAST_BID_VALUE_ELEMENT.html( `R$ ${ response.current_bid.toLocaleString( 'pt-br', { style: 'currency', currency: 'BRL' } ) }` );
 
             PRE_BID_SELECT.html( '' );
 
@@ -100,6 +123,10 @@
         // Actions.
         if( $( '[oaa-pre-bid-form]' ).length > 0 ) {
             $( '[oaa-pre-bid-form]' ).submit( preBid );
+        }
+
+        if( $( '[oaa-bid-form]' ).length > 0 ) {
+            $( '[oaa-bid-form]' ).submit( bid );
         }
 
         if( $( '[oaa-menu-tab]' ).length > 0 ) {

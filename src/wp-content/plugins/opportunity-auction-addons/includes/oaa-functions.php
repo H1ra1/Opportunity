@@ -57,3 +57,11 @@ function oaa_get_bid_next_bids_values( int $auction_product_id, float $last_bid 
 
     return $next_bids;
 }
+
+function oaa_get_current_bid_value( int $auction_product_id ) {
+    $current_bid    = get_post_meta( $auction_product_id, 'woo_ua_auction_current_bid', true );
+    $opening_price  = get_post_meta( $auction_product_id, 'woo_ua_opening_price', true );
+    $formated_value = number_format( isset( $current_bid ) && ! empty( $current_bid ) ? $current_bid : $opening_price, 2, ',', '.' );
+
+    return $formated_value;
+}

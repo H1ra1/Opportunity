@@ -374,37 +374,105 @@ $colorBase2: #0198DA;
     }
 
     &__bid_holder {
-        .oaa-pre-bid {
-            &__pre_bid_form {
-                background-color: #FFF;
-                box-shadow: 0 0 2px 2px #0003;
-                border-radius: 2px;
-                width: 100%;
-                padding: 20px 10px;
-        
-                form {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 15px;
-        
-                    select {
-                        padding: 10px;
-                        height: 50px;
-                        min-width: 300px;
-                        text-align: center;
-                        outline: none;
+        .oaa-bid {
+            background-color: #FFF;
+            box-shadow: 0 0 2px 2px #0003;
+            border-radius: 2px;
+            padding: 15px 20px;
+
+            &__infos {
+                margin-bottom: 10px;
+
+                .oaa-bid-title {
+                    font-size: 16px;
+                    color: #4b4b4b;
+                    margin: 0;
+                }
+
+                .oaa-bid-price {
+
+                    .oaa-bid-price-value {
+                        font-size: 26px;
+                        font-weight: 700;
+                        color: $colorBase1;
+                        margin: 0;
                     }
-            
-                    button {
-                        background-color: $colorBase2;
-                        font-size: 14px;
+
+                    .oaa-bid-price-installments {
+                        font-size: 16px;
                         font-weight: 400;
-                        color: #FFF;
-                        padding: 10px 40px;
-                        height: 50px;
-                        border: none;
-                        outline: none;
+                        color: #4b4b4b;
+                    }
+                }
+            }
+
+            &__bid_form {
+                width: 100%;
+            }
+
+            form {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 15px;
+    
+                select {
+                    padding: 10px;
+                    height: 50px;
+                    min-width: 300px;
+                    text-align: center;
+                    outline: none;
+                    border: 1px solid #c7c7c7;
+                }
+        
+                button {
+                    background-color: $colorBase2;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #FFF;
+                    padding: 10px 40px;
+                    height: 50px;
+                    border: none;
+                    outline: none;
+                    transition: all .2s ease-in-out;
+
+                    &:hover {
+                        background-color: $colorBase1;
+                    }
+                }
+            }
+
+            &__buttons {
+                display: flex;
+                justify-content: space-evenly;
+                margin-top: 15px;
+                gap: 15px;
+
+                button {
+                    font-size: 16px;
+                    font-weight: 700;
+                    padding: 10px 30px;
+                    color: #FFF;
+                    outline: none;
+                    border: none;
+                    box-shadow: 0 0 2px 2px #0003;
+                    width: -webkit-fill-available;
+                    transition: all .2s ease-in-out;
+
+                    &.bg-base-1 {
+                        background-color: $colorBase1;
+
+                        &:hover {
+                            background-color: $colorBase2;
+                        }
+                    }
+
+                    &.bg-base-2 {
+                        background-color: $colorBase2;
+
+                        &:hover {
+                            background-color: $colorBase1;
+                        }
                     }
                 }
             }
