@@ -19,7 +19,7 @@
             <p>Altura Aproximada: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'altura_aproximada' ] ); ?></strong></p>
             <p>Pelagem: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'pelagem' ]->name ); ?></strong></p>
             <p>Vend: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'criador' ]->name ); ?></strong></p>
-            <p>Local: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'raca' ]->name ); ?></strong></p>
+            <p>Local: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'cidade_localizacao_do_animal' ]->name . "/" . $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'uf_localizacao_do_animal' ]->name ); ?></strong></p>
         </div>
     </div>
 
@@ -36,6 +36,6 @@
         </div>
     </div>
 
-    <a href="#" class="oaa-lot-card__button --light">Dar pré lance</a>
+    <a href="<?php echo esc_url( $args[ 'lot_product_data' ][ 'url' ] ); ?>" class="oaa-lot-card__button --light">Dar pré lance</a>
     <a href="<?php echo esc_url( $args[ 'lot_product_data' ][ 'url' ] ); ?>" class="oaa-lot-card__button --dark">Mais informações</a>
 </div>

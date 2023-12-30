@@ -35,8 +35,9 @@ $bid_started                = get_post_meta( $auction_product->id, 'woo_ua_aucti
                 <p>Nascimento: <strong><?php esc_html_e( $auction_lot_animal_data[ 'dados_gerais' ][ 'data_de_nascimento' ] ); ?></strong></p>
                 <p>Altura Aproximada: <strong><?php esc_html_e( $auction_lot_animal_data[ 'dados_gerais' ][ 'altura_aproximada' ] ); ?></strong></p>
                 <p>Pelagem: <strong><?php esc_html_e( $auction_lot_animal_data[ 'dados_gerais' ][ 'pelagem' ]->name ); ?></strong></p>
+                <?php echo ! empty( $auction_lot_animal_data[ 'dados_gerais' ][ 'registro' ] ) ? "<p>Registro: <strong>{$auction_lot_animal_data[ 'dados_gerais' ][ 'registro' ]}</strong></p>" : ''; ?>
                 <p>Vend: <strong><?php esc_html_e( $auction_lot_animal_data[ 'dados_gerais' ][ 'criador' ]->name ); ?></strong></p>
-                <p>Local: <strong><?php esc_html_e( $auction_lot_animal_data[ 'dados_gerais' ][ 'raca' ]->name ); ?></strong></p>
+                <p>Local: <strong><?php esc_html_e( $auction_lot_animal_data[ 'dados_gerais' ][ 'cidade_localizacao_do_animal' ]->name . "/" . $auction_lot_animal_data[ 'dados_gerais' ][ 'uf_localizacao_do_animal' ]->name ); ?></strong></p>
             </div>
         </div>
     </div>

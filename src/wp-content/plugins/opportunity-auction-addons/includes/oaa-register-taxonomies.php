@@ -171,6 +171,76 @@ function oaa_register_taxonomies() {
         'show_in_menu' => true,
         'show_in_rest' => true,
     ) );
+
+    // Register the UF taxonomy.
+    register_taxonomy( 'uf', 
+        array(
+            0 => 'animal',
+            1 => 'auction',
+        ), 
+        array(
+            'labels' => array(
+            'name' => 'UF',
+            'singular_name' => 'UF',
+            'menu_name' => 'UF',
+            'all_items' => 'All UF',
+            'edit_item' => 'Edit UF',
+            'view_item' => 'View UF',
+            'update_item' => 'Update UF',
+            'add_new_item' => 'Add New UF',
+            'new_item_name' => 'New UF Name',
+            'search_items' => 'Search UF',
+            'popular_items' => 'Popular UF',
+            'separate_items_with_commas' => 'Separate UF with commas',
+            'add_or_remove_items' => 'Add or remove UF',
+            'choose_from_most_used' => 'Choose from the most used UF',
+            'not_found' => 'No UF found',
+            'no_terms' => 'No UF',
+            'items_list_navigation' => 'UF list navigation',
+            'items_list' => 'UF list',
+            'back_to_items' => '← Go to UF',
+            'item_link' => 'UF Link',
+            'item_link_description' => 'A link to a UF',
+        ),
+        'public' => true,
+        'show_in_menu' => true,
+        'show_in_rest' => true,
+    ) );
+
+    // Register the Cidade taxonomy.
+    register_taxonomy( 'cidade', 
+        array(
+            0 => 'animal',
+            1 => 'auction',
+        ), 
+        array(
+            'labels' => array(
+            'name' => 'Cidade',
+            'singular_name' => 'Cidade',
+            'menu_name' => 'Cidade',
+            'all_items' => 'All Cidade',
+            'edit_item' => 'Edit Cidade',
+            'view_item' => 'View Cidade',
+            'update_item' => 'Update Cidade',
+            'add_new_item' => 'Add New Cidade',
+            'new_item_name' => 'New Cidade Name',
+            'search_items' => 'Search Cidade',
+            'popular_items' => 'Popular Cidade',
+            'separate_items_with_commas' => 'Separate Cidade with commas',
+            'add_or_remove_items' => 'Add or remove Cidade',
+            'choose_from_most_used' => 'Choose from the most used Cidade',
+            'not_found' => 'No Cidade found',
+            'no_terms' => 'No Cidade',
+            'items_list_navigation' => 'Cidade list navigation',
+            'items_list' => 'Cidade list',
+            'back_to_items' => '← Go to Cidade',
+            'item_link' => 'Cidade Link',
+            'item_link_description' => 'A link to a Cidade',
+        ),
+        'public' => true,
+        'show_in_menu' => true,
+        'show_in_rest' => true,
+    ) );
 }
 
 // Add actions.
