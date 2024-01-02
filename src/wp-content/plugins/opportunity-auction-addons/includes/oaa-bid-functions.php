@@ -32,8 +32,13 @@ function oaa_get_bids_on_auction( int $auction_id ): array {
 }
 
 function oaa_get_user_last_bid( int $user_id, int $auction_id ): object | null {
-    $prefix         = WPDB->prefix;
-    $prepare_query  = WPDB->prepare( "SELECT * FROM {$prefix}woo_ua_auction_log AS al WHERE al.userid = %d AND al.auction_id = %d ORDER BY al.date DESC LIMIT 1", $user_id, $auction_id );
+    $table_name     = WPDB->prefix . 'woo_ua_auction_log';
+    $prepare_query  = WPDB->prepare( 
+        "SELECT * FROM %i AS al WHERE al.userid = %d AND al.auction_id = %d ORDER BY al.date DESC LIMIT 1",
+        $table_name,
+        $user_id, 
+        $auction_id 
+    );
     $query_results  = WPDB->get_row( $prepare_query );
 
     return $query_results;
