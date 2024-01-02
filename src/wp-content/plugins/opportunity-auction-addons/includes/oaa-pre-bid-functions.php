@@ -37,13 +37,12 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     return true;
 }
 
-function oaa_get_pre_bids_from_user_on_auction( int $user_id, int $auction_id ): array {
+function oaa_get_pre_bids_from_user_on_auction( int $auction_id ): array {
     $table_name = WPDB->prefix . 'oaa_pre_bids';
 
     $prepare_query  = WPDB->prepare( 
-        "SELECT * FROM %i AS pb WHERE pb.user_id = %d AND pb.auction_id = %d ORDER BY pb.date DESC", 
+        "SELECT * FROM %i AS pb WHERE pb.auction_id = %d ORDER BY pb.date DESC", 
         $table_name,
-        WPDB->esc_like( $user_id ),
         WPDB->esc_like( $auction_id ),
     );
     $pre_bids_query = oaa_execute_query( $prepare_query );
@@ -51,10 +50,10 @@ function oaa_get_pre_bids_from_user_on_auction( int $user_id, int $auction_id ):
     if( $pre_bids_query == null )
         return [];
 
-    $user_data     = get_user_by( 'id', $user_id );
     $pre_bids_data = array();
-
+    
     foreach( $pre_bids_query as $pre_bid ) {
+        $user_data       = get_user_by( 'id', $pre_bid->user_id );
         $pre_bids_data[] = ( object ) [
             'id'            => $pre_bid->id,
             'user_id'       => $pre_bid->user_id,

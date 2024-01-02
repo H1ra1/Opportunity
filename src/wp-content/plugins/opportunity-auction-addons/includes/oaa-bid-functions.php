@@ -1,23 +1,21 @@
 <?php
 
-function oaa_get_bids_from_user_on_auction( int $user_id, int $auction_id ): array {
-    $table_name = WPDB->prefix . 'woo_ua_auction_log';
-
+function oaa_get_bids_on_auction( int $auction_id ): array {
+    $table_name     = WPDB->prefix . 'woo_ua_auction_log';
     $prepare_query  = WPDB->prepare( 
-        "SELECT * FROM %i AS al WHERE al.userid = %d AND al.auction_id = %d ORDER BY al.date DESC", 
+        "SELECT * FROM %i AS al WHERE al.auction_id = %d ORDER BY al.date DESC", 
         $table_name,
-        WPDB->esc_like( $user_id ),
         WPDB->esc_like( $auction_id ),
     );
-    $bids_query = oaa_execute_query( $prepare_query );
+    $bids_query     = oaa_execute_query( $prepare_query );
 
     if( $bids_query == null )
         return [];
 
-    $user_data     = get_user_by( 'id', $user_id );
     $bids_data = array();
-
+    
     foreach( $bids_query as $bid ) {
+        $user_data   = get_user_by( 'id', $bid->userid );
         $bids_data[] = ( object ) [
             'id'            => $bid->id,
             'user_id'       => $bid->userid,
