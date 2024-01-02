@@ -52,10 +52,16 @@ function oaa_update_user_ip_last_bid( int $user_id, int $auction_id ): string | 
     if( $user_last_bid == null )
         return "Not last bid found.";
     
-    $prefix = WPDB->prefix;
+    $table_name = WPDB->prefix . 'woo_ua_auction_log';
     
     // Execute query.
-    WPDB->query( WPDB->prepare( "UPDATE {$prefix}woo_ua_auction_log as al SET al.ip = %s, al.date = %s WHERE al.id = %d", oaa_get_user_ip(), date( 'y-m-d H:i:s' ),$user_last_bid->id ) );
+    WPDB->query( WPDB->prepare( 
+        "UPDATE %i as al SET al.ip = %s, al.date = %s WHERE al.id = %d",
+        $table_name,
+        oaa_get_user_ip(), 
+        date( 'y-m-d H:i:s' ) 
+        ,$user_last_bid->id 
+    ) );
 
     if( ! empty( WPDB->last_error ) )
         return WPDB->last_error;
