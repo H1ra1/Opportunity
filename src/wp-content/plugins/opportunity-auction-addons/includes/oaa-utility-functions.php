@@ -120,3 +120,9 @@ function oaa_get_yt_video_id( string $url ) {
 
     return $match[1];
 }
+
+function oaa_get_user_ip() {
+    $user_ip = array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER ) && ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ? $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] : $_SERVER[ 'REMOTE_ADDR' ];
+
+    return $user_ip;
+}

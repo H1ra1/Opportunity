@@ -67,6 +67,7 @@ if ( ! class_exists( 'OAA' ) ) {
             $this->create_pages();
             $this->create_database_tables();
             $this->create_user_roles();
+            $this->create_columns_on_auction_tables();
         }
 
         private function create_pages() {
@@ -300,6 +301,15 @@ if ( ! class_exists( 'OAA' ) ) {
                     remove_menu_page( 'woocommerce-marketing' );
                     remove_menu_page( 'woocommerce' );
                 }
+            }
+        }
+
+        private function create_columns_on_auction_tables() {
+            $prefix = WPDB->prefix;
+
+            // Create IP column on auction log table
+            if( empty( WPDB->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$prefix}woo_ua_auction_log' AND COLUMN_NAME = 'ip'" ) ) ) {
+                WPDB->query( "ALTER TABLE {$prefix}woo_ua_auction_log ADD `ip` varchar(32) NULL" );
             }
         }
     }

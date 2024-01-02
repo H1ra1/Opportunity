@@ -1,6 +1,8 @@
 <?php
 
 function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | bool {
+    date_default_timezone_set( 'America/Sao_Paulo' );
+
     $user       = get_user_by( 'id', $user_id );
     $auction    = get_post( $auction_id );
 
@@ -21,6 +23,7 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
         'user_id'       => $user->ID,
         'auction_id'    => $auction->ID,
         'bid'           => $bid,
+        'ip'            => oaa_get_user_ip(),
         'date'          => date( 'y-m-d H:i:s' )
     ) );
 

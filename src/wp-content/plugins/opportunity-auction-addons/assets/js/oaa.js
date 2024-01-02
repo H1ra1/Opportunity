@@ -20,7 +20,7 @@
             data    : DATA
         } ).done( ( response ) => {
             if( response.success )
-                updateBidNextBidsValues( BID_VALUE, AUCTION_PRODUCT_ID );
+                updateBidNextBidsValues( BID_VALUE, AUCTION_PRODUCT_ID, false );
         } ).error( ( error ) => console.error( error ) );
     }
 
@@ -45,18 +45,19 @@
             dataType: 'json'
         } ).done( ( response ) => {
             if( response.allstatus == 1 )
-                updateBidNextBidsValues( BID_VALUE, AUCTION_PRODUCT_ID );
+                updateBidNextBidsValues( BID_VALUE, AUCTION_PRODUCT_ID, true );
         } ).error( ( error ) => console.error( error ) );
     }
 
-    function updateBidNextBidsValues( lastBid, auctionProductId ) {
+    function updateBidNextBidsValues( lastBid, auctionProductId, isBid ) {
         const PRE_BID_SELECT            = $( '#oaa-bid-form-select' );
         const LAST_BID_VALUE_ELEMENT    = $( '.oaa-bid-price-value'  );
         const DATA                      = {
             action              : 'oaa_update_bid_next_bids_values_ajax',
             nonce               : main_params.nonce,
             last_bid_value      : lastBid,
-            auction_product_id  : auctionProductId
+            auction_product_id  : auctionProductId,
+            is_bid              : isBid
         }
 
         $.ajax( {
