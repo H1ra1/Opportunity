@@ -118,6 +118,67 @@
         } );
     }
 
+    function oaaUserRegisterSave( $event ) {
+        $event.preventDefault();
+
+        const FORM                  = $( '#user_register_form' );
+        const FIELDS                = FORM.find( '.elementor-field-textual' );
+        const FORM_DATA_OBJECT      = {};
+        let required_field_empty    = false;
+        let invalid_field           = false;
+
+        FIELDS.each( ( index, field ) => {
+            const FIELD_NAME = $( field ).attr( 'name' ).match( /\[(.*?)\]/ )[ 1 ];
+            let field_value;
+
+            switch( $( field ).prop( 'nodeName' ) ) {
+                case 'INPUT':
+                    field_value = $( field ).val();
+                    break;
+                case 'INPUT':
+                    field_value = $( field ).find( 'option:selected' ).val();
+                    break;
+                default:
+                    field_value = $( field ).val();
+                    break;
+            }
+            
+            if( $( field ).attr( 'required' ) == 'required' && field_value == '' )
+                required_field_empty = true;
+
+            if( ! $( field )[ 0 ].validity.valid )
+                invalid_field = true;
+
+            FORM_DATA_OBJECT[ FIELD_NAME ] = field_value;
+        } );
+
+        if( required_field_empty || invalid_field ) {
+            console.log( 'enbtrou aqui fio' );
+            console.log( required_field_empty );
+            console.log( invalid_field );
+            FORM.submit();
+
+            return false;
+        }
+
+        const DATA = {
+            action      : 'oaa_new_user_register_ajax',
+            nonce       : main_params.nonce,
+            form_data   : FORM_DATA_OBJECT
+        }
+
+        $.ajax( {
+            url     : main_params.ajax_url,
+            method  : 'POST',
+            data    : DATA,
+            dataType: 'json'
+        } ).done( ( response ) => {
+            console.log( response );
+            
+            FORM.submit();
+        } ).error( ( error ) => console.error( error ) );
+    }
+
     $( document ).ready( () => {
         console.log( 'OAA Scripts Loaded!' );
 
@@ -136,6 +197,10 @@
 
         if( $( '[oaa-modal-open]' ).length > 0 ) {
             $( '[oaa-modal-open]' ).click( oaaControlModal );
+        }
+
+        if( $( '#user-register-button' ).length > 0 ) {
+            $( '#user-register-button' ).click( oaaUserRegisterSave );
         }
     } );
 } ( jQuery ) );

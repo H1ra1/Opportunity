@@ -62,6 +62,7 @@ if ( ! class_exists( 'OAA' ) ) {
             oaa_include_once( 'includes/oaa-db-functions.php' );
             oaa_include_once( 'includes/oaa-bid-functions.php' );
             oaa_include_once( 'includes/oaa-pre-bid-functions.php' );
+            oaa_include_once( 'includes/oaa-auth-functions.php' );
 
             // Call core functions.
             $this->create_pages();
