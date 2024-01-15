@@ -727,6 +727,54 @@ $colorBase2: #0198DA;
     }
 }
 
+.oaa-genealogy {
+    display: flex;
+    justify-content: center;
+
+    &__holder {
+        max-width: 60%;
+
+        @media( max-width: 760px ) {
+            max-width: 100%;
+        }
+
+        table {
+            table-layout: fixed;
+            border-collapse: collapse;
+    
+            tbody {
+                tr {
+                    line-height: 1px;
+    
+                    td {
+                        background-color: transparent !important;
+                        border: none;
+                        vertical-align: middle;
+                        padding: 2px;
+    
+                        span {
+                            padding: 5px 10px;
+                            border-radius: 4px;
+                            display: block;
+                            font-size: 10px;
+                            border: 1px solid #fff;
+                            color: #FFF;
+    
+                            &.male {
+                                background-color: $colorBase1;
+                            }
+    
+                            &.female {
+                                background-color: $colorBase2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 // Default classes.
 .woocommerce-product-gallery {
     width: 30% !important;

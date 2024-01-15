@@ -72,41 +72,6 @@ function oaa_new_user_register_ajax() {
     wp_die();
 }
 
-// oaa_new_user_register( ( object ) [
-//     'username'  => 'cliente1@gmail.com',
-//     'password'  => '12345',
-//     'email'     => 'cliente1@gmail.com',
-//     'fullname'  => 'Cliente Teste da Silva o Brabo',
-//     'fields'    => [
-//         'user_cpf_cnpj'                 => '465.242.523-25',
-//         'user_rg_ie'                    => '05.944.894-Y',
-//         'user_endereco'                 => 'Rua teste',
-//         'user_endereco_numero'          => '42',
-//         'user_endereco_bairro'          => 'Vila Lala',
-//         'user_endereco_cep'             => '04473550',
-//         'user_endereco_estado'          => 'São Paulo',
-//         'user_endereco_cidade'          => 'São Paulo',
-//         'user_nacionalidade'            => 'Brasileiro',  
-//         'user_celular'                  => '11951252252',
-//         'user_telefone'                 => '',
-//         'user_naturalidade'             => 'Brasileiro',
-//         'user_estado_civil'             => 'Solteiro',
-//         'user_conjuge'                  => '',
-//         'user_pai'                      => '',
-//         'user_mae'                      => '',
-//         'user_profissao'                => '',
-//         'user_empresa'                  => '',
-//         'user_site_da_empresa'          => '',
-//         'user_informacoes_adicionais'   => '',
-//         'user_nome_da_fazenda_haras'    => '',
-//         'user_telefone_fazenda_haras'   => '',
-//         'user_propriedade_estado'       => '',
-//         'user_propriedade_cidade'       => '',
-//         'user_racas_de_interesse'       => '',
-//     ]
-// ] );
-
-
 function oaa_hide_wordpress_admin_bar($user){
     return ( current_user_can( 'administrator' ) ) ? $user : false;
 }

@@ -83,8 +83,10 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
             <p class="oaa-menu-tab-item__title">Genealogia</p>
 
             <div class="oaa-menu-tab-item__holder">
-                <?php if( ! empty( $auction_lot_animal_data[ 'genealogia' ] ) ): ?>
-                    <img src="<?php echo esc_url( $auction_lot_animal_data[ 'genealogia' ][ 'url' ] ); ?>" alt="<?php echo esc_url( $auction_lot_animal_data[ 'genealogia' ][ 'alt' ] ); ?>">
+                <?php if( ! empty( $auction_lot_animal_data[ 'genealogia_group_holder' ][ 'pai' ][ 'nome_do_pai' ] ) || ! empty( $auction_lot_animal_data[ 'genealogia_group_holder' ][ 'mae' ][ 'nome_do_pai' ] )  ): ?>
+                    <?php oaa_get_template( 'templates/oaa-genealogy-template', array(
+                        'genealogia' => $auction_lot_animal_data[ 'genealogia_group_holder' ]
+                    ) ); ?>
                 <?php else: ?>
                     <div class="oaa-menu-tab-item-empty">
                         <p>Este lote não possui Genealogia!</p>
