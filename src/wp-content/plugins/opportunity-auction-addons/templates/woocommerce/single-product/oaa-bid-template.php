@@ -18,6 +18,7 @@ $auction_lot_data           = $auction_post_fields[ 'lotes' ][ $auction_lot_indi
 $next_bids                  = oaa_get_bid_next_bids_values( $auction_product->id );
 $current_bid_value          = oaa_get_current_bid_value( $auction_product->id );
 $bid_started                = get_post_meta( $auction_product->id, 'woo_ua_auction_current_bid', true );
+$bid_closed                 = get_post_meta( $auction_product->id, 'woo_ua_auction_closed', true );
 
 ?>
 
@@ -43,6 +44,7 @@ $bid_started                = get_post_meta( $auction_product->id, 'woo_ua_aucti
     </div>
 
     <div class="oaa-bid-template__bid_holder">
+        <?php if( $bid_closed < 1 ): ?>
         <?php if( $pre_bid_open ): ?>
             <div class="oaa-bid">
                 <div class="oaa-bid__infos">
@@ -101,6 +103,7 @@ $bid_started                = get_post_meta( $auction_product->id, 'woo_ua_aucti
                     <button class="bg-base-1">Regulamento</button>
                 </div>
             </div>
+        <?php endif; ?>
         <?php endif; ?>
     </div>
     
