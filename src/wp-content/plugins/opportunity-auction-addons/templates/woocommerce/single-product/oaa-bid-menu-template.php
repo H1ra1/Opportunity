@@ -150,7 +150,10 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
                     <div class="oaa-menu-tab-item-table">
                         <?php foreach( $auction_lot_animal_data[ 'historico_veterinario_data' ] as $vet_data ): ?>
                             <div class="oaa-menu-tab-item-table__item">
-                                <span><?php esc_html_e( $vet_data[ 'titulo' ] ); ?>:</span>
+                                <span><?php esc_html_e( $vet_data[ 'titulo' ] ); ?></span>
+                                <?php if( ! empty( $vet_data[ 'observacao' ] ) ): ?>
+                                    <span class="menu-item-observation"><?php esc_html_e( $vet_data[ 'observacao' ] ); ?></span>
+                                <?php endif; ?>
                                 <span><?php esc_html_e( $vet_data[ 'valor' ] ); ?></span>
                             </div>
                         <?php endforeach; ?>

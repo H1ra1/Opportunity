@@ -558,21 +558,30 @@ $colorBase2: #0198DA;
                     &__item {
                         display: flex;
                         align-items: center;
-                        justify-content: space-between;
                         background-color: #FFF;
                         padding: 10px;
                         width: 100%;
                         vertical-align: middle;
                         border: 1px solid #dedede;
+                        gap: 10px;
 
                         span {
                             font-size: 16px;
                             color: #3a3a3a;
 
-                            &:nth-child( 2 ) {
+                            &.menu-item-observation {
+                                font-size: 12px;
+                                background-color: #ececec;
+                                border-radius: 5px;
+                                padding: 5px 10px;
+                                border: 1px solid #e0e0e0;
+                            }
+
+                            &:last-child {
                                 color: #FFF;
                                 padding: 0px 10px;
                                 background-color: #5cb85c;
+                                margin-left: auto;
                             }
                         }
                     }
