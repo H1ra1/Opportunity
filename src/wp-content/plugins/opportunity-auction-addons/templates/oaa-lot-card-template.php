@@ -8,7 +8,7 @@
     </div>
 
     <div class="oaa-lot-card__resume_box">
-        <p><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'comentario_resumido' ] ); ?></p>
+        <p><?php echo apply_filters( 'the_content', $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'comentario_resumido' ] ); ?></p>
     </div>
 
     <div class="oaa-lot-card__details_list">
@@ -18,6 +18,7 @@
             <p>Nascimento: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'data_de_nascimento' ] ); ?></strong></p>
             <p>Altura Aproximada: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'altura_aproximada' ] ); ?></strong></p>
             <p>Pelagem: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'pelagem' ]->name ); ?></strong></p>
+            <?php echo ! empty( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'registro' ] ) ? "<p>Registro: <strong>{$args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'registro' ]}</strong></p>" : ''; ?>
             <p>Vend: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'criador' ]->name ); ?></strong></p>
             <p>Local: <strong><?php esc_html_e( $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'cidade_localizacao_do_animal' ]->name . "/" . $args[ 'lot_product_data' ][ 'animal' ][ 'dados_gerais' ][ 'uf_localizacao_do_animal' ]->name ); ?></strong></p>
         </div>
