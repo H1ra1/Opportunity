@@ -99,6 +99,13 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
             <p class="oaa-menu-tab-item__title">Comentários</p>
 
             <div class="oaa-menu-tab-item__holder">
+                <?php if( ! empty( $auction_lot_animal_data[ 'comentarios' ] ) ): ?>
+                    <?php echo apply_filters( 'the_content', $auction_lot_animal_data[ 'comentarios' ] ); ?>
+                <?php else: ?>
+                    <div class="oaa-menu-tab-item-empty">
+                        <p>Este lote não possui nenhum comentário!</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -106,7 +113,13 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
             <p class="oaa-menu-tab-item__title">Campanha</p>
 
             <div class="oaa-menu-tab-item__holder">
-                
+                <?php if( ! empty( $auction_lot_animal_data[ 'campanha' ] ) ): ?>
+                    <?php echo apply_filters( 'the_content', $auction_lot_animal_data[ 'campanha' ] ); ?>
+                <?php else: ?>
+                    <div class="oaa-menu-tab-item-empty">
+                        <p>Este lote não possui nenhuma campanha!</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
