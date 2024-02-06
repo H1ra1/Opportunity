@@ -111,7 +111,7 @@
                         <?php oaa_get_template( 'templates/oaa-modal-template', array(
                             'modal_id'      => 'oaa-catalago',
                             'modal_title'   => "Catálogo - {$auction_title}",
-                            'pdf'           => $auction_data[ 'catalogo_em_pdf' ][ 'url' ],
+                            'pdf'           => ! empty( $auction_data[ 'catalogo_em_pdf' ] ) ? $auction_data[ 'catalogo_em_pdf' ][ 'url' ] : '',
                             'empty_message' => 'Nenhum Catálogo cadastrado.'
                         ) ); ?>
 
