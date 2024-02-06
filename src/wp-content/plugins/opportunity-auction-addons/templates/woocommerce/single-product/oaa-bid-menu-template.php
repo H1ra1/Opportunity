@@ -44,6 +44,10 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
         <div class="oaa-menu-tab" oaa-menu-tab="historico_de_lances">
             <p>Histórico de Lances</p>
         </div>
+
+        <div class="oaa-menu-tab" oaa-menu-tab="documentos">
+            <p>Documentos</p>
+        </div>
     </div>
 
     <div class="oaa-bid-menu__menu_tabs_items">
@@ -187,6 +191,28 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
                     'bids'          => $auction_lot_bids,
                     'pre_bid_open'  => $pre_bid_open
                  ) ); ?>
+            </div>
+        </div>
+
+        <div class="oaa-menu-tab-item" oaa-menu-tab-item='documentos'>
+            <p class="oaa-menu-tab-item__title">Documentos</p>
+
+            <div class="oaa-menu-tab-item__holder">
+                <?php if( is_array( $auction_lot_animal_data[ 'documentos_holder' ] ) && count( $auction_lot_animal_data[ 'documentos_holder' ] ) > 0 ): ?>
+                    <div class="oaa-menu-tab-item-list">
+                        <?php foreach( $auction_lot_animal_data[ 'documentos_holder' ] as $document ): ?>
+                            <div class="oaa-menu-tab-item-list__item">
+                                <p><?php esc_html_e( $document[ 'nome_do_documento' ] ); ?></p>
+
+                                <a href="<?php esc_html_e( $document[ 'documento' ][ 'url' ] ); ?>" download>Download</a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="oaa-menu-tab-item-empty">
+                        <p>Este lote não possui nenhum documento!</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

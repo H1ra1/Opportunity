@@ -588,6 +588,44 @@ $colorBase2: #0198DA;
                         }
                     }
                 }
+
+                .oaa-menu-tab-item-list {
+                    &__item {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px;
+                        border-bottom: 1px solid #dddddd;
+                        transition: all .2s ease-in-out;
+
+                        &:last-of-type {
+                            border-bottom: none;
+                        }
+
+                        &:hover {
+                            background-color: #f9f9f9;
+                        }
+
+                        p {
+                            color: $colorBase1;
+                            margin: 0;
+                        }
+
+                        a {
+                            border: 1px solid $colorBase1;
+                            color: $colorBase1;
+                            text-decoration: none;
+                            padding: 5px 10px;
+                            transition: all .2s ease-in-out;
+                            border-radius: 2px;
+
+                            &:hover {
+                                background-color: $colorBase1;
+                                color: #FFF;
+                            }
+                        }
+                    }
+                }
             }
 
             &.--active {
