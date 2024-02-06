@@ -169,7 +169,7 @@ if ( ! class_exists( 'OAA' ) ) {
             wp_set_object_terms( $product_id, 'auction', 'product_type' );
 
             // Update the post metas.
-            update_post_meta( $product_id, 'woo_ua_opening_price', $lot_data[ 'preco_de_abertura' ] );
+            update_post_meta( $product_id, 'woo_ua_opening_price', ! empty( $lot_data[ 'preco_de_abertura' ] ) ? $lot_data[ 'preco_de_abertura' ] : $auction_configs[ 'preco_padrao_de_abertura' ] );
             update_post_meta( $product_id, 'woo_ua_lowest_price', $lot_data[ 'menor_preco_para_aceitar' ] );
             update_post_meta( $product_id, '_regular_price', $lot_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $lot_data[ 'preco_venda_imediata' ] );
@@ -202,7 +202,7 @@ if ( ! class_exists( 'OAA' ) ) {
             }
             
             // Update the post metas.
-            update_post_meta( $product_id, 'woo_ua_opening_price', $lot_data[ 'preco_de_abertura' ] );
+            update_post_meta( $product_id, 'woo_ua_opening_price', ! empty( $lot_data[ 'preco_de_abertura' ] ) ? $lot_data[ 'preco_de_abertura' ] : $auction_configs[ 'preco_padrao_de_abertura' ]);
             update_post_meta( $product_id, 'woo_ua_lowest_price', $lot_data[ 'menor_preco_para_aceitar' ] );
             update_post_meta( $product_id, '_regular_price', $lot_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $lot_data[ 'preco_venda_imediata' ] );
