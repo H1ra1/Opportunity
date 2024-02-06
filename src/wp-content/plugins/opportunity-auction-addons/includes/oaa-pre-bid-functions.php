@@ -54,6 +54,10 @@ function oaa_get_pre_bids_from_user_on_auction( int $auction_id ): array {
     
     foreach( $pre_bids_query as $pre_bid ) {
         $user_data       = get_user_by( 'id', $pre_bid->user_id );
+        $user_meta       = get_user_meta( $pre_bid->user_id );
+        $user_fullname   = ( ! empty( $user_meta[ 'first_name' ][ 0 ] ) ? $user_meta[ 'first_name' ][ 0 ] : '' ) . ' ' . ( ! empty( $user_meta[ 'last_name' ][ 0 ] ) ? $user_meta[ 'last_name' ][ 0 ] : '' );
+        $customer_data   = get_field( 'user_personal_data', "user_{$pre_bid->user_id}" );
+
         $pre_bids_data[] = ( object ) [
             'id'            => $pre_bid->id,
             'user_id'       => $pre_bid->user_id,
@@ -61,7 +65,7 @@ function oaa_get_pre_bids_from_user_on_auction( int $auction_id ): array {
             'bid'           => number_format( $pre_bid->bid, 2, ',', '.' ),
             'date'          => date( 'd/m/Y', strtotime( $pre_bid->date ) ),
             'time'          => date( 'H:i:s', strtotime( $pre_bid->date ) ),
-            'name'          => $user_data->data->user_nicename,
+            'name'          => ! empty( $customer_data[ 'user_nome_da_fazenda_haras' ] ) ? $customer_data[ 'user_nome_da_fazenda_haras' ] : $user_fullname,
             'email'         => $user_data->data->user_email,
         ];
     }
