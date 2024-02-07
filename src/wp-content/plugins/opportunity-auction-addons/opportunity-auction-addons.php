@@ -291,6 +291,14 @@ if ( ! class_exists( 'OAA' ) ) {
                 )
             );
 
+            add_role(
+                'leiloeiro',
+                __( 'Leiloeiro' ),
+                array(
+                    'read'  => false,
+                )
+            );
+
             // remove_role( 'simplified_administrator' );
         }
 

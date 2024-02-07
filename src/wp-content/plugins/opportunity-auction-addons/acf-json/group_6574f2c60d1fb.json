@@ -607,11 +607,11 @@
                     "endpoint": 0
                 },
                 {
-                    "key": "field_6586c4e4ca250",
-                    "label": "Responsáveis",
-                    "name": "responsaveis",
+                    "key": "field_65c3d3200259c",
+                    "label": "Leiloeiros",
+                    "name": "leiloleiros",
                     "aria-label": "",
-                    "type": "repeater",
+                    "type": "user",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -620,98 +620,14 @@
                         "class": "",
                         "id": ""
                     },
-                    "layout": "table",
-                    "pagination": 0,
-                    "min": 0,
-                    "max": 0,
-                    "collapsed": "",
-                    "button_label": "Adicionar responsável",
-                    "rows_per_page": 20,
-                    "sub_fields": [
-                        {
-                            "key": "field_6586c527ca251",
-                            "label": "Nome do Responsável",
-                            "name": "nome_do_responsavel",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "32",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "parent_repeater": "field_6586c4e4ca250"
-                        },
-                        {
-                            "key": "field_6586c568ca252",
-                            "label": "Descrição",
-                            "name": "descricao",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "30",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "parent_repeater": "field_6586c4e4ca250"
-                        },
-                        {
-                            "key": "field_6586c5acca253",
-                            "label": "Celular do Responsável",
-                            "name": "celular_do_responsavel",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "22",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "parent_repeater": "field_6586c4e4ca250"
-                        },
-                        {
-                            "key": "field_6586c5d3ca254",
-                            "label": "E-mail do Responsável",
-                            "name": "e-mail_do_responsavel",
-                            "aria-label": "",
-                            "type": "email",
-                            "instructions": "",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "20",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "parent_repeater": "field_6586c4e4ca250"
-                        }
-                    ]
+                    "role": [
+                        "leiloeiro"
+                    ],
+                    "return_format": "array",
+                    "multiple": 1,
+                    "allow_null": 0,
+                    "bidirectional": 0,
+                    "bidirectional_target": []
                 },
                 {
                     "key": "field_6586d3892d343",
@@ -788,5 +704,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1707248647
+    "modified": 1707332467
 }

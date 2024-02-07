@@ -44,10 +44,13 @@
                             <p>Incremento Mínimo: <strong>R$ <?php esc_html_e( number_format( $auction_data[ 'incremento_de_lance' ], 2, ',', '.' ) ); ?></strong></p>
                         </div>
                             
-                        <?php if( is_array( $auction_data[ 'responsaveis' ] ) && count( $auction_data[ 'responsaveis' ] ) > 0 ): ?>
+                        <?php if( is_array( $auction_data[ 'leiloleiros' ] ) && count( $auction_data[ 'leiloleiros' ] ) > 0 ): ?>
                             <div class="list-block">
-                                <?php foreach( $auction_data[ 'responsaveis' ] as $responsavel ): ?>
-                                    <p><?php echo "{$responsavel[ 'descricao' ]}: <strong>{$responsavel[ 'nome_do_responsavel' ]}</strong> - {$responsavel[ 'celular_do_responsavel' ]}"; ?></p>
+                                <?php foreach( $auction_data[ 'leiloleiros' ] as $leiloleiro ): ?>
+                                    <?php 
+                                        $leiloleiro_fields = get_field( 'leiloeiro', "user_{$leiloleiro[ 'ID' ]}" );
+                                    ?>
+                                    <p><?php echo "{$leiloleiro_fields[ 'descricao' ]}: <strong>{$leiloleiro[ 'user_firstname' ]} {$leiloleiro[ 'user_lastname' ]}</strong> - {$leiloleiro_fields[ 'celular' ]}"; ?></p>
                                 <?php endforeach ?>
                             </div>
                         <?php endif; ?>
