@@ -107,9 +107,11 @@ if ( ! class_exists( 'OAA' ) ) {
 
             // Scripts.
             wp_enqueue_script( 'oaa-scripts', OAA_URL . "assets/js/oaa.js", array( 'jquery' ), $this->version );
+            wp_enqueue_script( 'oaa-slick', OAA_URL . "assets/lib/slick.min.js", array( 'jquery' ), '1.8.1' );
 
             // Styles.
             wp_enqueue_style( 'oaa-styles', OAA_URL . "assets/css/oaa.min.css", array(), $this->version );
+            wp_enqueue_style( 'oaa-slick', OAA_URL . "assets/lib/slick.css", array(), '1.8.1' );
 
             // Add vars to scripts.
             wp_localize_script(

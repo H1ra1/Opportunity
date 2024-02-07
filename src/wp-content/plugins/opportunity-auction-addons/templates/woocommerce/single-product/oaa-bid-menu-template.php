@@ -55,10 +55,27 @@ $auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auct
             <p class="oaa-menu-tab-item__title">Fotos / Vídeos</p>
 
             <div class="oaa-menu-tab-item__holder">
-                <?php if( ! empty( $auction_lot_animal_data[ 'video' ] ) ): ?>
-                    <div class="oaa-menu-tab-item-video-holder">
-                        <iframe width="100%" height="100%" src="<?php echo esc_url( "https://www.youtube.com/embed/" . oaa_get_yt_video_id( $auction_lot_animal_data[ 'video' ] ) ); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <?php if( is_array( $auction_lot_animal_data[ 'videos_group' ] ) && count( $auction_lot_animal_data[ 'videos_group' ] ) > 0 ): ?>
+                    <div class="oaa-slick-holder" slick-init>
+                        <div class="oaa-default-arrow oaa-slick-arrow-prev"><i class="fas fa-chevron-left"></i></div>
+
+                        <div class="oaa-menu-tab-item-video-slider" slick-container>
+                            <?php foreach( $auction_lot_animal_data[ 'videos_group' ] as $video ): ?>
+                                <div class="oaa-menu-tab-item-video-slider__item">
+                                    <div class="oaa-menu-tab-item-video-holder">
+                                        <iframe width="100%" height="100%" src="<?php echo esc_url( "https://www.youtube.com/embed/" . oaa_get_yt_video_id( $video[ 'url_do_video' ] ) ); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    </div>
+                                    
+                                    <?php if( ! empty( $video[ 'descricao_do_video' ] ) ): ?>
+                                        <p><?php esc_html_e( $video[ 'descricao_do_video' ] ); ?></p>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <div class="oaa-default-arrow oaa-slick-arrow-next"><i class="fas fa-chevron-right"></i></div>
                     </div>
+                    
                 <?php endif; ?>
 
                 <div class="oaa-image-gallery">

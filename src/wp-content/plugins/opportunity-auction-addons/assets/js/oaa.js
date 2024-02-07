@@ -179,6 +179,22 @@
         } ).error( ( error ) => console.error( error ) );
     }
 
+    function initSlick( identifier ) {
+        const SLICK_HOLDER      = $( identifier );
+        const SLICK_CONTAINER   = $( identifier ).find( '[slick-container]' );
+        
+        SLICK_CONTAINER.slick( {
+            prevArrow: $('.oaa-slick-arrow-prev'),
+            nextArrow: $('.oaa-slick-arrow-next')
+        } );
+
+        if( SLICK_CONTAINER.find( '.slick-track > .slick-slide' ).length < 2 ) {
+            SLICK_HOLDER.css( {
+                padding: '0'
+            } )
+        }
+    }
+
     $( document ).ready( () => {
         console.log( 'OAA Scripts Loaded!' );
 
@@ -201,6 +217,10 @@
 
         if( $( '#user-register-button' ).length > 0 ) {
             $( '#user-register-button' ).click( oaaUserRegisterSave );
+        }
+
+        if( $( '[slick-init]' ).length > 0 ) {
+            initSlick( '[slick-init]' );
         }
     } );
 } ( jQuery ) );
