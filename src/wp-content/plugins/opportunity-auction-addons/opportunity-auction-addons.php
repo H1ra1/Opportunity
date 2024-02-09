@@ -63,6 +63,7 @@ if ( ! class_exists( 'OAA' ) ) {
             oaa_include_once( 'includes/oaa-bid-functions.php' );
             oaa_include_once( 'includes/oaa-pre-bid-functions.php' );
             oaa_include_once( 'includes/oaa-auth-functions.php' );
+            oaa_include_once( 'includes/oaa-page-templates.php' );
 
             // Call core functions.
             $this->create_pages();
@@ -100,7 +101,8 @@ if ( ! class_exists( 'OAA' ) ) {
 
         public function enqueue_scripts() {
             $vars = array(
-                'uri'                   => OAA_URL,
+                'url'                   => OAA_URL,
+                'home_url'              => get_home_url(),
                 'ajax_url'              => admin_url( 'admin-ajax.php' ),
                 'nonce'                 => wp_create_nonce( 'ajax-nonce' )
             );

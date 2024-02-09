@@ -65,3 +65,10 @@ function oaa_get_current_bid_value( int $auction_product_id ) {
 
     return $formated_value;
 }
+
+function oaa_hide_wordpress_admin_bar( $user ){
+    return ( current_user_can( 'administrator' ) ) ? $user : false;
+}
+
+// Add filters.
+add_filter( 'show_admin_bar' , 'oaa_hide_wordpress_admin_bar');

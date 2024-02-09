@@ -885,6 +885,151 @@ $colorBase2: #0198DA;
     }
 }
 
+.oaa-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.oaa-login-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    box-shadow: 0 0 6px -2px rgba(0,0,0,.3);
+    padding: 50px 50px 20px 50px;
+    border-radius: 10px;
+
+    .oaa-login-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 15px;
+
+        label {
+            input {
+                min-width: 300px;
+                outline: none;
+                border: 1px solid #e0e0e0;
+                box-shadow: 0 0 6px -2px rgba(0,0,0,.3);
+                border-radius: 5px;
+
+                &:focus, &:active, &:visited, &:target {
+                   background-color: #FFF; 
+                }
+
+                &:-webkit-autofill,
+                &:-webkit-autofill:focus {
+                    transition: background-color 0s 600000s, color 0s 600000s !important;
+                }
+
+                &.--error {
+                    border: 1px solid #df6767;
+                }
+            }
+
+            p {
+                font-size: 14px;
+                color: #3a3a3a;
+                margin: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        button {
+            background-color: transparent;
+            border: 1px solid $colorBase1;
+            border-radius: 5px;
+            outline: none;
+            transition: all .2s ease-in-out;
+
+            p {
+                color: $colorBase1;
+                margin: 0;
+                transition: all .2s ease-in-out;
+            }
+            
+            &:hover {
+                background-color: $colorBase1;
+
+                p {
+                    color: #FFF;
+                }
+            }
+
+            .oaa-loading {
+                display: none;
+            }
+
+            &.--loading {
+                background-color: $colorBase1;
+
+                p {
+                    color: #FFF;
+                }
+
+                .oaa-loading {
+                    display: block;
+                }
+            }
+        }
+
+        a {
+            text-align: center;
+            text-decoration: none;
+            color: $colorBase1;
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__message {
+        padding: 10px;
+        border: 5px;
+        box-shadow: 0 0 6px -2px rgba(0,0,0,.3);
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        transition: all .2s ease-in-out;
+        opacity: 0;
+        overflow: hidden;
+        height: 0;
+
+        p {
+            font-size: 14px;
+            color:#3a3a3a;
+            margin: 0;
+            text-align: left;
+        }
+
+        &.--error {
+            background-color: #fff3f3;
+            border: 1px solid #df6767;
+        }
+
+        &.--success {
+            background-color: #f3fff5;
+            border: 1px solid #67df77;
+        }
+
+        &.--show {
+            opacity: 1;
+            height: auto;
+        }
+    }
+}
+
+.oaa-loading {
+    i {
+        color: #FFF;
+        animation: oaa-sping-loading .5s infinite ease-in-out;
+    }
+}
+
 // Default classes.
 .woocommerce-product-gallery {
     width: 30% !important;
@@ -892,4 +1037,15 @@ $colorBase2: #0198DA;
 
 .summary.entry-summary {
     width: 68% !important;
+}
+
+// Keyframes
+@keyframes oaa-sping-loading {
+    0% {
+        transform: rotate( 0 );
+    }
+    
+    100% {
+        transform: rotate( 360deg );
+    }
 }

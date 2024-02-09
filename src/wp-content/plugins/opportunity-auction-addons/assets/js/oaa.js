@@ -195,6 +195,86 @@
         }
     }
 
+    function oaaFormLogin( form ) {
+        form.preventDefault();
+        const FORM           = $( form.currentTarget );
+        const INPUTS         = FORM.find( 'input' );
+        const EMAIL_INPUT    = FORM.find( '#oaa-form-email' );
+        const PASSWORD_INPUT = FORM.find( '#oaa-form-password' );
+        const BUTTON         = FORM.find( 'button' );
+        const LOADING        = FORM.find( '[oaa-form-loading]' );
+        const MESSAGE_BOX    = FORM.parent().find( '[oaa-login-form-message-box]' );
+        const ERROR_MESSAGES = {
+            email       : 'Preencha o campo de e-mail.',
+            password    : 'Preencha o campo de senha.',
+            exist       : 'E-mail já cadastrado.'
+        };
+        const ERRORS = [];
+
+        BUTTON.find( 'p' ).remove();
+        BUTTON.addClass( '--loading' );
+        BUTTON.attr( 'disabled', 'disabled' );
+        MESSAGE_BOX.html( '' );
+        MESSAGE_BOX.removeClass( '--show' );
+
+        INPUTS.each( ( i, element ) => {
+            const TYPE = $( element ).attr( 'type' );
+
+            if( $( element ).val() == '' ) {
+                $( element ).addClass( '--error' );
+
+                ERRORS.push( ERROR_MESSAGES[ TYPE ] );
+            } else {
+                $( element ).removeClass( '--error' );
+            }
+        } );
+
+
+        if( ERRORS.length > 0 ) {
+            MESSAGE_BOX.addClass( '--error' );
+
+            ERRORS.forEach( ( value ) => {
+                MESSAGE_BOX.append( `<p>${value}</p>` );
+            } );
+
+            MESSAGE_BOX.addClass( '--show' );
+        }
+
+        const DATA = {
+            action      : 'oaa_user_login_ajax',
+            nonce       : main_params.nonce,
+            email       : EMAIL_INPUT.val(),
+            password    : PASSWORD_INPUT.val()
+        }
+
+        $.ajax( {
+            url     : main_params.ajax_url,
+            method  : 'POST',
+            data    : DATA,
+            dataType: 'json'
+        } ).success( ( response ) => {
+            if( response.success ) {
+                MESSAGE_BOX.addClass( '--success' );
+                MESSAGE_BOX.append( `<p>${response.data.message}</p>` );
+                MESSAGE_BOX.addClass( '--show' );
+
+                window.location.href = main_params.home_url;
+            } else {
+                MESSAGE_BOX.addClass( '--error' );
+                MESSAGE_BOX.append( `<p>${response.data.message}</p>` );
+                MESSAGE_BOX.addClass( '--show' );
+
+                BUTTON.attr( 'disabled', false );
+            }
+
+            BUTTON.removeClass( '--loading' );
+            BUTTON.append( '<p>Entrar</p>' );
+        } ).error( ( error ) => {
+            console.log( error );
+            
+        });
+    }
+
     $( document ).ready( () => {
         console.log( 'OAA Scripts Loaded!' );
 
@@ -221,6 +301,10 @@
 
         if( $( '[slick-init]' ).length > 0 ) {
             initSlick( '[slick-init]' );
+        }
+
+        if( $( '[oaa-login-form]' ).length > 0 ) {
+            $( '[oaa-login-form]' ).submit( oaaFormLogin );
         }
     } );
 } ( jQuery ) );

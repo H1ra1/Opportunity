@@ -72,13 +72,45 @@ function oaa_new_user_register_ajax() {
     wp_die();
 }
 
-function oaa_hide_wordpress_admin_bar($user){
-    return ( current_user_can( 'administrator' ) ) ? $user : false;
+function oaa_user_login_ajax() {
+    if( wp_verify_nonce( $_POST['nonce'], 'ajax-nonce' ) ) {
+        $email      = esc_html( $_POST[ 'email' ] );
+        $password   = esc_html( $_POST[ 'password' ] );
+
+        if( ! email_exists( $email ) ) {
+            wp_send_json_error( array( 
+                'message' => 'E-mail ou senha incorretos.'
+            ) );
+        }
+
+        $credentials = array(
+            'user_login'    => $email,
+            'user_password' => $password,
+            'remember'      => true
+        );
+    
+        $user = wp_signon( $credentials, false );
+
+        if ( is_wp_error( $user ) ) {
+            wp_send_json_error( array( 
+                'message' => 'E-mail ou senha incorretos.'
+            ) );
+        }
+
+        wp_send_json( array( 
+            'data'      => [
+                'message' => 'Login efetuado com sucesso!'
+            ],
+            'success'   => true
+        ), 200 );
+    }
+
+    wp_die();
 }
 
 // Add actions.
 add_action( 'wp_ajax_oaa_new_user_register_ajax', 'oaa_new_user_register_ajax' );
 add_action( 'wp_ajax_nopriv_oaa_new_user_register_ajax', 'oaa_new_user_register_ajax' );
 
-// Add filters.
-add_filter( 'show_admin_bar' , 'oaa_hide_wordpress_admin_bar');
+add_action( 'wp_ajax_oaa_user_login_ajax', 'oaa_user_login_ajax' );
+add_action( 'wp_ajax_nopriv_oaa_user_login_ajax', 'oaa_user_login_ajax' );
