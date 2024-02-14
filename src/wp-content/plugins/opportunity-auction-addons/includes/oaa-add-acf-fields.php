@@ -724,11 +724,14 @@ function oaa_add_acf_fields() {
         ) );    
 }
 
-function oaa_save_acf_fields() {
+function oaa_acf_fields_path() {
     return OAA_PATH . 'acf-json';
 }
 
-add_filter( 'acf/settings/save_json', 'oaa_save_acf_fields' );
+// Add filters.
+add_filter( 'acf/settings/save_json', 'oaa_acf_fields_path' );
+add_filter( 'acf/settings/load_json', 'oaa_acf_fields_path' );
+
 
 // Add actions.
 // add_action( 'acf/include_fields', 'oaa_add_acf_fields' );
