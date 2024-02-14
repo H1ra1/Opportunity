@@ -725,7 +725,7 @@ function oaa_add_acf_fields() {
 }
 
 function oaa_acf_fields_path() {
-    return OAA_PATH . 'acf-json';
+    return OAA_PATH . 'oaa-acf-json';
 }
 
 // Add filters.
