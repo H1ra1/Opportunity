@@ -99,5 +99,21 @@ function oaa_update_bid_next_bids_values_ajax() {
     wp_die();
 }
 
+function oaa_check_outlier_bid_ajax() {
+    if( wp_verify_nonce( $_POST['nonce'], 'ajax-nonce' ) ) {
+        $auction_product_id     = esc_html( $_POST[ 'auction_product_id' ] );
+        $bid_value              = esc_html( $_POST[ 'bid_value' ] );
+        $bid_outlier            = oaa_check_outlier_bid_and_pre_bid( $auction_product_id, $bid_value, true );
+
+        if( $bid_outlier )
+            wp_send_json( array( 'status' => 1 ), 200 );
+
+        wp_send_json( array( 'status' => 0 ), 200 );
+    }
+
+    wp_die();
+}
+
 // Add actions.
 add_action( 'wp_ajax_oaa_update_bid_next_bids_values_ajax', 'oaa_update_bid_next_bids_values_ajax' );
+add_action( 'wp_ajax_oaa_check_outlier_bid_ajax', 'oaa_check_outlier_bid_ajax' );

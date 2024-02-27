@@ -22,7 +22,7 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     $pre_bid_outlier = oaa_check_outlier_bid_and_pre_bid( $auction_id, $bid );
 
     if( $pre_bid_outlier )
-        return 'Pre bid value is outlier';
+        return 'Pre bid value is outlier.';
 
     $inset_on_db = oaa_insert_on_table( 'oaa_pre_bids', array(
         'user_id'       => $user->ID,

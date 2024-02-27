@@ -24,7 +24,7 @@
         } ).error( ( error ) => console.error( error ) );
     }
 
-    function bid( $event ) {
+    async function bid( $event ) {
         $event.preventDefault();
         
         const FORM                  = $( $event.currentTarget );
@@ -36,6 +36,13 @@
             nonce               : main_params.nonce,
             uwa_bid_value       : BID_VALUE,
             uwa_place_bid       : AUCTION_PRODUCT_ID
+        }
+
+        const CHECK_OUTLIER_BID = await checkOutlierBid( AUCTION_PRODUCT_ID, BID_VALUE );
+
+        if( CHECK_OUTLIER_BID.status == 1 ) {
+            console.log( 'Bid value is outlier.' )
+            return false;
         }
 
         $.ajax( {
@@ -72,6 +79,23 @@
             response.next_bids.forEach( ( nextBid ) => {
                 PRE_BID_SELECT.append( `<option value="${ nextBid }">${ nextBid.toLocaleString( 'pt-br', { style: 'currency', currency: 'BRL' } ) }</option>` )
             } );
+        } ).error( ( error ) => console.error( error ) );
+    }
+
+    async function checkOutlierBid( auctionProductID, bidValue ) {
+        const DATA                      = {
+            action              : 'oaa_check_outlier_bid_ajax',
+            nonce               : main_params.nonce,
+            auction_product_id  : auctionProductID,
+            bid_value           : bidValue
+        }
+
+        return await $.ajax( {
+            url     : main_params.ajax_url,
+            method  : 'POST',
+            data    : DATA
+        } ).done( ( response ) => {
+            return response;
         } ).error( ( error ) => console.error( error ) );
     }
 
