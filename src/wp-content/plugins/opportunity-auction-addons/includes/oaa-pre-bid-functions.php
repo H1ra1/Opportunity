@@ -24,6 +24,11 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     if( $pre_bid_outlier )
         return 'Pre bid value is outlier.';
 
+    $last_pre_bid_user = oaa_get_last_bid_and_pre_bid( $auction_id, true );
+
+    if( $last_pre_bid_user && $last_pre_bid_user == $user->ID )
+        return 'Pre bid already made by this user.';
+
     $inset_on_db = oaa_insert_on_table( 'oaa_pre_bids', array(
         'user_id'       => $user->ID,
         'auction_id'    => $auction->ID,

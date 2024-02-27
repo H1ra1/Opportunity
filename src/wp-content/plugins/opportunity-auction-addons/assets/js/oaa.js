@@ -38,10 +38,10 @@
             uwa_place_bid       : AUCTION_PRODUCT_ID
         }
 
-        const CHECK_OUTLIER_BID = await checkOutlierBid( AUCTION_PRODUCT_ID, BID_VALUE );
+        const CHECK_BID_REQUIREMENTS = await checkBidRequirements( AUCTION_PRODUCT_ID, BID_VALUE );
 
-        if( CHECK_OUTLIER_BID.status == 1 ) {
-            console.log( 'Bid value is outlier.' )
+        if( CHECK_BID_REQUIREMENTS.success == false ) {
+            console.log( CHECK_BID_REQUIREMENTS.message )
             return false;
         }
 
@@ -82,9 +82,9 @@
         } ).error( ( error ) => console.error( error ) );
     }
 
-    async function checkOutlierBid( auctionProductID, bidValue ) {
+    async function checkBidRequirements( auctionProductID, bidValue ) {
         const DATA                      = {
-            action              : 'oaa_check_outlier_bid_ajax',
+            action              : 'oaa_check_bid_requirements_ajax',
             nonce               : main_params.nonce,
             auction_product_id  : auctionProductID,
             bid_value           : bidValue
@@ -96,7 +96,10 @@
             data    : DATA
         } ).done( ( response ) => {
             return response;
-        } ).error( ( error ) => console.error( error ) );
+        } ).error( ( error ) => {
+            console.error( error );
+            return error;
+        } );
     }
 
     function changeMenuTab( element ) {

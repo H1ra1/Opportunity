@@ -99,16 +99,25 @@ function oaa_update_bid_next_bids_values_ajax() {
     wp_die();
 }
 
-function oaa_check_outlier_bid_ajax() {
+function oaa_check_bid_requirements_ajax() {
     if( wp_verify_nonce( $_POST['nonce'], 'ajax-nonce' ) ) {
+        
+        if( ! is_user_logged_in() )
+            wp_send_json( array( 'success' => false, 'message' => 'User not logged in.' ), 500 );
+
         $auction_product_id     = esc_html( $_POST[ 'auction_product_id' ] );
         $bid_value              = esc_html( $_POST[ 'bid_value' ] );
+        $current_user_id        = get_current_user_id();
         $bid_outlier            = oaa_check_outlier_bid_and_pre_bid( $auction_product_id, $bid_value, true );
+        $last_pre_bid_user      = oaa_get_last_bid_and_pre_bid( $auction_product_id, true, true );
 
         if( $bid_outlier )
-            wp_send_json( array( 'status' => 1 ), 200 );
+            wp_send_json( array( 'success' => false, 'message' => 'Bid value is outlier.' ), 500 );
 
-        wp_send_json( array( 'status' => 0 ), 200 );
+        if( $last_pre_bid_user && $last_pre_bid_user == $current_user_id )
+            wp_send_json( array( 'success' => false, 'message' => 'Bid already made by this user.' ), 500 );
+
+        wp_send_json( array( 'success' => true ), 200 );
     }
 
     wp_die();
@@ -116,4 +125,4 @@ function oaa_check_outlier_bid_ajax() {
 
 // Add actions.
 add_action( 'wp_ajax_oaa_update_bid_next_bids_values_ajax', 'oaa_update_bid_next_bids_values_ajax' );
-add_action( 'wp_ajax_oaa_check_outlier_bid_ajax', 'oaa_check_outlier_bid_ajax' );
+add_action( 'wp_ajax_oaa_check_bid_requirements_ajax', 'oaa_check_bid_requirements_ajax' );

@@ -106,5 +106,42 @@ function oaa_check_outlier_bid_and_pre_bid( int $auction_id, float $next_bid_val
     return false;
 }
 
+function oaa_get_last_bid_and_pre_bid( int $auction_id, bool $user_id = false, bool $bid = false ): bool|object|int {
+    
+    if( ! $bid ) {
+        $table_name = WPDB->prefix . 'oaa_pre_bids';
+    
+        $prepare_query  = WPDB->prepare( 
+            "SELECT * FROM %i AS pb WHERE pb.auction_id = %d ORDER BY pb.date DESC", 
+            $table_name,
+            WPDB->esc_like( $auction_id ),
+        );
+    } else {
+        $table_name = WPDB->prefix . 'woo_ua_auction_log';
+    
+        $prepare_query  = WPDB->prepare( 
+            "SELECT * FROM %i AS al WHERE al.auction_id = %d ORDER BY al.date DESC", 
+            $table_name,
+            WPDB->esc_like( $auction_id ),
+        );
+    }
+    $query = oaa_execute_query( $prepare_query );
+
+    if( is_array( $query ) && count( $query ) == 0 )
+        return false;
+
+    $last_bid = $query[ 0 ];
+
+    if( $user_id ) {
+        if( $bid ) {
+            return $last_bid->userid;
+        } else {
+            return $last_bid->user_id;
+        }
+    }
+
+    return $last_bid;
+}
+
 // Add filters.
 add_filter( 'show_admin_bar' , 'oaa_hide_wordpress_admin_bar');
