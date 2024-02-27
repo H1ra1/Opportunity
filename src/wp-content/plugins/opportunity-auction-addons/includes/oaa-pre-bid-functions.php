@@ -19,6 +19,11 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     if( ! $pre_bid_is_open )
         return 'Pre bid is not longer open.';
 
+    $pre_bid_outlier = oaa_check_outlier_bid_and_pre_bid( $auction_id, $bid );
+
+    if( $pre_bid_outlier )
+        return 'Pre bid value is outlier';
+
     $inset_on_db = oaa_insert_on_table( 'oaa_pre_bids', array(
         'user_id'       => $user->ID,
         'auction_id'    => $auction->ID,
@@ -37,7 +42,7 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     return true;
 }
 
-function oaa_get_pre_bids_from_user_on_auction( int $auction_id ): array {
+function oaa_get_pre_bids_on_auction( int $auction_id ): array {
     $table_name = WPDB->prefix . 'oaa_pre_bids';
 
     $prepare_query  = WPDB->prepare( 

@@ -70,5 +70,41 @@ function oaa_hide_wordpress_admin_bar( $user ){
     return ( current_user_can( 'administrator' ) ) ? $user : false;
 }
 
+function oaa_check_outlier_bid_and_pre_bid( int $auction_id, float $next_bid_value, bool $bid = false ): float {
+
+    if( ! $bid ) {
+        $table_name = WPDB->prefix . 'oaa_pre_bids';
+    
+        $prepare_query  = WPDB->prepare( 
+            "SELECT * FROM %i AS pb WHERE pb.auction_id = %d ORDER BY pb.date DESC", 
+            $table_name,
+            WPDB->esc_like( $auction_id ),
+        );
+    } else {
+        $table_name = WPDB->prefix . 'woo_ua_auction_log';
+    
+        $prepare_query  = WPDB->prepare( 
+            "SELECT * FROM %i AS al WHERE al.auction_id = %d ORDER BY al.date DESC", 
+            $table_name,
+            WPDB->esc_like( $auction_id ),
+        );
+    }
+    $query = oaa_execute_query( $prepare_query );
+
+    if( is_array( $query ) && count( $query ) == 0 )
+        return false;
+
+    $last_bid = floatval( $query[ 0 ]->bid );
+
+    $auction_post_id        = get_post_meta( $auction_id, 'oaa_auction_product_post_id', true );
+    $auction_bid_increment  = get_field( 'auction', $auction_post_id )[ 'incremento_de_lance' ];
+    $next_acceptable_bid    = $last_bid + ( $auction_bid_increment * 1 );
+
+    if( $next_bid_value > $next_acceptable_bid )
+        return true;
+
+    return false;
+}
+
 // Add filters.
 add_filter( 'show_admin_bar' , 'oaa_hide_wordpress_admin_bar');

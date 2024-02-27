@@ -12,7 +12,7 @@ $auction_post_fields        = get_field( 'auction', $auction_post_id );
 $auction_lot_animal_id      = get_post_meta( $auction_product->id, 'oaa_auction_animal_post_id', true );
 $auction_lot_animal_data    = get_field( 'animal', $auction_lot_animal_id );
 $pre_bid_open               = oaa_check_if_pre_bid_is_open( $auction_product->id );
-$auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_from_user_on_auction( $auction_product->id ) : oaa_get_bids_on_auction( $auction_product->id );
+$auction_lot_bids           = $pre_bid_open ? oaa_get_pre_bids_on_auction( $auction_product->id ) : oaa_get_bids_on_auction( $auction_product->id );
 ?>
 
 <section class="oaa-bid-menu">
