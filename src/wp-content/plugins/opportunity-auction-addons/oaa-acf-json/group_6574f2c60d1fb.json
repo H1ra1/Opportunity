@@ -78,33 +78,13 @@
                     "append": ""
                 },
                 {
-                    "key": "field_6576114c693b5",
-                    "label": "Condições de pagamento( EX:  2+2+2+2+2+30 )",
-                    "name": "condicoes_de_pagamento",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "20",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
                     "key": "field_6575148b8b31b",
-                    "label": "Incremento de Lance",
-                    "name": "incremento_de_lance",
+                    "label": "Incremento de Lances",
+                    "name": "incremento_de_lances",
                     "aria-label": "",
                     "type": "number",
                     "instructions": "",
-                    "required": 1,
+                    "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "20",
@@ -118,6 +98,32 @@
                     "step": "",
                     "prepend": "",
                     "append": ""
+                },
+                {
+                    "key": "field_65de625941a2c",
+                    "label": "Incremento de Lances por Regra",
+                    "name": "incremento_de_lances_por_regra",
+                    "aria-label": "",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "increment_rule"
+                    ],
+                    "post_status": "",
+                    "taxonomy": "",
+                    "return_format": "object",
+                    "multiple": 0,
+                    "allow_null": 1,
+                    "bidirectional": 0,
+                    "ui": 1,
+                    "bidirectional_target": []
                 },
                 {
                     "key": "field_657b5da24a213",
@@ -138,6 +144,26 @@
                     "max": 100,
                     "placeholder": "",
                     "step": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_6576114c693b5",
+                    "label": "Condições de pagamento ( EX:  2+2+2+2+2+30 )",
+                    "name": "condicoes_de_pagamento",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
                     "prepend": "",
                     "append": ""
                 },
@@ -704,5 +730,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1707332467
+    "modified": 1709073996
 }

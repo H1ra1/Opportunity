@@ -171,13 +171,23 @@ if ( ! class_exists( 'OAA' ) ) {
 
             // Define the product type auction.
             wp_set_object_terms( $product_id, 'auction', 'product_type' );
+            
+            // Get increment value by rule
+            if( ! empty( $auction_post_fields[ 'incremento_de_lances_por_regra' ] ) ) {
+                $auction_post_id        = get_post_meta( $product_id, 'oaa_auction_product_post_id', true );
+                $auction_post_fields    = get_field( 'auction', $auction_post_id );
+                $increment_rule_value   = oaa_get_increment_by_rule( $auction_post_fields[ 'incremento_de_lances_por_regra' ]->ID, ! empty( $lot_data[ 'preco_de_abertura' ] ) ? $lot_data[ 'preco_de_abertura' ] : $auction_configs[ 'preco_padrao_de_abertura' ] );
+                $increment              = $increment_rule_value;
+            } else {
+                $increment = $auction_configs[ 'incremento_de_lances' ];
+            }
 
             // Update the post metas.
             update_post_meta( $product_id, 'woo_ua_opening_price', ! empty( $lot_data[ 'preco_de_abertura' ] ) ? $lot_data[ 'preco_de_abertura' ] : $auction_configs[ 'preco_padrao_de_abertura' ] );
             update_post_meta( $product_id, 'woo_ua_lowest_price', $lot_data[ 'menor_preco_para_aceitar' ] );
             update_post_meta( $product_id, '_regular_price', $lot_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $lot_data[ 'preco_venda_imediata' ] );
-            update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
+            update_post_meta( $product_id, 'woo_ua_bid_increment', $increment );
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );
@@ -204,13 +214,25 @@ if ( ! class_exists( 'OAA' ) ) {
                 // Save it.
                 $auction_product_object->save();
             }
+
+            // Get increment value by rule
+            if( ! empty( $auction_post_fields[ 'incremento_de_lances_por_regra' ] ) ) {
+                $auction_post_id        = get_post_meta( $product_id, 'oaa_auction_product_post_id', true );
+                $auction_post_fields    = get_field( 'auction', $auction_post_id );
+                $current_bid            = get_post_meta( $product_id, 'woo_ua_auction_current_bid', true );
+                $actual_bid             = $current_bid != null && ! empty( $current_bid ) && $current_bid > 0 ? $current_bid : ( ! empty( $lot_data[ 'preco_de_abertura' ] ) ? $lot_data[ 'preco_de_abertura' ] : $auction_configs[ 'preco_padrao_de_abertura' ] );
+                $increment_rule_value   = oaa_get_increment_by_rule( $auction_post_fields[ 'incremento_de_lances_por_regra' ]->ID, $actual_bid );
+                $increment              = $increment_rule_value;
+            } else {
+                $increment = $auction_configs[ 'incremento_de_lances' ];
+            }
             
             // Update the post metas.
             update_post_meta( $product_id, 'woo_ua_opening_price', ! empty( $lot_data[ 'preco_de_abertura' ] ) ? $lot_data[ 'preco_de_abertura' ] : $auction_configs[ 'preco_padrao_de_abertura' ]);
             update_post_meta( $product_id, 'woo_ua_lowest_price', $lot_data[ 'menor_preco_para_aceitar' ] );
             update_post_meta( $product_id, '_regular_price', $lot_data[ 'preco_venda_imediata' ] );
             update_post_meta( $product_id, '_price', $lot_data[ 'preco_venda_imediata' ] );
-            update_post_meta( $product_id, 'woo_ua_bid_increment', $auction_configs[ 'incremento_de_lance' ] );
+            update_post_meta( $product_id, 'woo_ua_bid_increment', $increment );
             update_post_meta( $product_id, 'woo_ua_auction_start_date', $auction_configs[ 'data_de_inicio_lances' ] );
             update_post_meta( $product_id, 'woo_ua_auction_end_date', $auction_configs[ 'data_de_termino_lances' ] );
             update_post_meta( $product_id, 'woo_ua_next_bids', $auction_configs[ 'numero_de_proximos_lances' ] );

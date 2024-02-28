@@ -37,6 +37,13 @@ function oaa_get_bid_next_bids_values( int $auction_product_id, float $last_bid 
     $opening_price          = get_post_meta( $auction_product_id, 'woo_ua_opening_price', true );
 
     $next_bids = array();
+    
+    if( ! empty( $auction_post_fields[ 'incremento_de_lances_por_regra' ] ) ) {
+        $actual_bid = $last_bid > 0 ? $last_bid : ( $current_bid != null && ! empty( $current_bid ) && $current_bid > 0 ? $current_bid : $opening_price );
+        $increment = oaa_get_increment_by_rule( $auction_post_fields[ 'incremento_de_lances_por_regra' ]->ID, $actual_bid );
+    } else {
+        $increment = $auction_post_fields[ 'incremento_de_lances' ];
+    }
 
     if( $last_bid == 0 ) {
         $current_bid        = $current_bid == null || empty( $current_bid ) ? 0 : $current_bid;
@@ -44,15 +51,15 @@ function oaa_get_bid_next_bids_values( int $auction_product_id, float $last_bid 
         if( $current_bid == 0 ) {
             $current_increment  = floatval( $opening_price );
         } else {
-            $current_increment  = floatval( $current_bid ) + floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+            $current_increment  = floatval( $current_bid ) + floatval( $increment );
         }
     } else {
-        $current_increment = floatval( $last_bid ) + floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+        $current_increment = floatval( $last_bid ) + floatval( $increment );
     }
 
     for ( $i = 0; $i < $auction_post_fields[ 'numero_de_proximos_lances' ]; $i++ ) {
         $next_bids[] = $current_increment;
-        $current_increment += floatval( $auction_post_fields[ 'incremento_de_lance' ] );
+        $current_increment += floatval( $increment );
     }
 
     return $next_bids;
@@ -97,7 +104,7 @@ function oaa_check_outlier_bid_and_pre_bid( int $auction_id, float $next_bid_val
     $last_bid = floatval( $query[ 0 ]->bid );
 
     $auction_post_id        = get_post_meta( $auction_id, 'oaa_auction_product_post_id', true );
-    $auction_bid_increment  = get_field( 'auction', $auction_post_id )[ 'incremento_de_lance' ];
+    $auction_bid_increment  = get_field( 'auction', $auction_post_id )[ 'incremento_de_lances' ];
     $next_acceptable_bid    = $last_bid + ( $auction_bid_increment * 1 );
 
     if( $next_bid_value > $next_acceptable_bid )
@@ -107,7 +114,7 @@ function oaa_check_outlier_bid_and_pre_bid( int $auction_id, float $next_bid_val
 }
 
 function oaa_get_last_bid_and_pre_bid( int $auction_id, bool $user_id = false, bool $bid = false ): bool|object|int {
-    
+
     if( ! $bid ) {
         $table_name = WPDB->prefix . 'oaa_pre_bids';
     
@@ -141,6 +148,20 @@ function oaa_get_last_bid_and_pre_bid( int $auction_id, bool $user_id = false, b
     }
 
     return $last_bid;
+}
+
+function oaa_get_increment_by_rule( int $rule_id, $current_bid ) {
+    $rules      = get_field( 'regras_de_incremento', $rule_id );
+    $last_rule  = $rules[ count( $rules ) - 1 ];
+
+    if( $current_bid > $last_rule[ 'lances_de_ate' ] )
+        return $last_rule[ 'valor_do_incremento' ];
+
+    foreach( $rules as $rule ) {
+        if( $current_bid <=  $rule[ 'lances_de_ate' ] ) {
+            return $rule[ 'valor_do_incremento' ];
+        }
+    }
 }
 
 // Add filters.

@@ -92,6 +92,51 @@ function oaa_register_post_types() {
             'menu_icon'         => 'dashicons-schedule'
         ) 
     );
+
+    // Register the Increment Rules post type.
+    register_post_type( 'increment_rule', 
+        array(
+            'labels'            => array(
+                'name' => 'Regras de incremento',
+                'singular_name' => 'Regra de incremento',
+                'menu_name' => 'Regras de incremento',
+                'all_items' => 'Todas Regras de incremento',
+                'edit_item' => 'Editar Regra de incremento',
+                'view_item' => 'Ver Regra de incremento',
+                'view_items' => 'Ver Regras de incremento',
+                'add_new_item' => 'Adicioanr nova Regra de incremento',
+                'add_new' => 'Adicioanr nova Regra de incremento',
+                'new_item' => 'Nova Regra de incremento',
+                'parent_item_colon' => 'Parent Regra de incremento:',
+                'search_items' => 'Buscar Regras de incremento',
+                'not_found' => 'Nenhum Regra de incremento encontrado',
+                'not_found_in_trash' => 'Nenhuma Regra de incremento encontrado na lixeira',
+                'archives' => 'Regra de incremento Archives',
+                'attributes' => 'Regra de incremento Atributos',
+                'insert_into_item' => 'Insert into Regra de incremento',
+                'uploaded_to_this_item' => 'Uploaded to this Regra de incremento',
+                'filter_items_list' => 'Filter Regras de incremento list',
+                'filter_by_date' => 'Filter Regras de incremento by date',
+                'items_list_navigation' => 'Regras de incremento list navigation',
+                'items_list' => 'Regras de incremento list',
+                'item_published' => 'Regra de incremento publicado.',
+                'item_published_privately' => 'Regra de incremento publicado privadamente.',
+                'item_reverted_to_draft' => 'Regra de incremento revertido para rascunho.',
+                'item_scheduled' => 'Regra de incremento agendado.',
+                'item_updated' => 'Regra de incremento atualizado.',
+                'item_link' => 'Regra de incremento Link',
+                'item_link_description' => 'A link to a regra de incremento.',
+            ),
+            'public'            => true,
+            'show_in_rest'      => true,
+            'supports'          => array(
+                0 => 'title',
+                1 => 'editor',
+            ),
+            'delete_with_user'  => false,
+            'menu_icon'         => 'dashicons-hammer'
+        ) 
+    );
 }
 
 // Add actions.

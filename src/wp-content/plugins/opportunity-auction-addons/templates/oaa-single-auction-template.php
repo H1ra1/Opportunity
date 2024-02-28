@@ -3,10 +3,12 @@
         exit; // Exit if accessed directly.
     }
 
-    $auction_id     = get_the_ID();
-    $auction_title  = get_the_title();
-    $auction_data   = get_field( 'auction', $auction_id );
-    $pre_bid_open   = oaa_check_if_pre_bid_is_open( $auction_id, false );
+    $auction_id         = get_the_ID();
+    $auction_title      = get_the_title();
+    $auction_data       = get_field( 'auction', $auction_id );
+    $pre_bid_open       = oaa_check_if_pre_bid_is_open( $auction_id, false );
+    $increment_rule     = oaa_get_increment_by_rule( $auction_data[ 'incremento_de_lances_por_regra' ]->ID, 0 ); 
+    $minimum_increment  = ! empty( $auction_data[ 'incremento_de_lances_por_regra' ] ) ? $increment_rule : $auction_data[ 'incremento_de_lances' ];
 
     get_header();
 ?>
@@ -41,7 +43,7 @@
                             <p>Transmissão: <strong><?php esc_html_e( oaa_translate_day_name( date( 'l', strtotime( $auction_data[ 'data_de_inicio_lances' ] ) ) ) ) ?>, <?php esc_html_e( date( 'd/m/Y', strtotime( $auction_data[ 'data_de_inicio_lances' ] ) ) ) ?> às <?php esc_html_e( date( 'H:i', strtotime( $auction_data[ 'data_de_inicio_lances' ] ) ) ) ?></strong></p>
                             <p>Condições: <strong><?php esc_html_e( $auction_data[ 'total_de_parcelas' ] ); ?> PARCELAS (<?php echo esc_html_e( $auction_data[ 'condicoes_de_pagamento' ] ); ?>)</strong></p>
                             <?php echo ! empty( $auction_data[ 'comissao_de_compra' ] ) ? "<p>Comissão de Compra: <strong>{$auction_data[ 'comissao_de_compra' ]}%</strong></p>" : ''; ?>
-                            <p>Incremento Mínimo: <strong>R$ <?php esc_html_e( number_format( $auction_data[ 'incremento_de_lance' ], 2, ',', '.' ) ); ?></strong></p>
+                            <p>Incremento Mínimo: <strong>R$ <?php esc_html_e( number_format( $minimum_increment, 2, ',', '.' ) ); ?></strong></p>
                         </div>
                             
                         <?php if( is_array( $auction_data[ 'leiloleiros' ] ) && count( $auction_data[ 'leiloleiros' ] ) > 0 ): ?>
