@@ -29,6 +29,8 @@ function oaa_new_pre_bid( int $user_id, int $auction_id, float $bid ): string | 
     if( $last_pre_bid_user && $last_pre_bid_user == $user->ID )
         return 'Pre bid already made by this user.';
 
+    oaa_put_extra_time_on_pre_bid( $auction_id );
+
     $inset_on_db = oaa_insert_on_table( 'oaa_pre_bids', array(
         'user_id'       => $user->ID,
         'auction_id'    => $auction->ID,
@@ -114,6 +116,27 @@ function oaa_check_if_pre_bid_is_open( int $id, bool $product_id = true ): bool 
     $pre_bid_open           = $pre_bid_date_open && ! $pre_bid_date_close ? true : false;
 
     return $pre_bid_open;
+}
+
+function oaa_put_extra_time_on_pre_bid( int $auction_id ): bool {
+    $auction_post_id                 = get_post_meta( $auction_id, 'oaa_auction_product_post_id', true );
+    $auction_post_pre_bid_end_date   = get_post_meta( $auction_post_id, 'auction_data_de_termino_pre_lances', true );
+    $auction_post_bid_start_date     = get_post_meta( $auction_post_id, 'auction_data_de_inicio_lances', true );
+    $minutes_left                    = oaa_minutes_left_from( $auction_post_pre_bid_end_date );
+
+    if( $minutes_left >= 5 )
+        return false;
+
+    $auction_post_pre_bid_end_date  = new DateTime( $auction_post_pre_bid_end_date, new DateTimeZone( 'America/Sao_Paulo' ) );
+    $auction_post_bid_start_date    = new DateTime( $auction_post_bid_start_date, new DateTimeZone( 'America/Sao_Paulo' ) );
+
+    $auction_post_pre_bid_end_date->add( new DateInterval( 'PT5M' ) );
+    $auction_post_bid_start_date->add( new DateInterval( 'PT5M' ) );
+
+    update_post_meta( $auction_post_id, 'auction_data_de_termino_pre_lances', $auction_post_pre_bid_end_date->format( 'Y-m-d H:i:s' ) );
+    update_post_meta( $auction_post_id, 'auction_data_de_inicio_lances', $auction_post_bid_start_date->format( 'Y-m-d H:i:s' ) );
+
+    return true;
 }
 
 // Ajax functions.

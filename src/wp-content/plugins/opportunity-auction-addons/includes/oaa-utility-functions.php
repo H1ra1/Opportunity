@@ -67,6 +67,20 @@ function oaa_now_date_equal_or_bigger( string $date ) {
     return false;
 }
 
+function oaa_minutes_left_from( string $date ): int {
+    $date_now       = new DateTime( 'now', new DateTimeZone( 'America/Sao_Paulo' ) );
+    $date           = new DateTime( $date, new DateTimeZone( 'America/Sao_Paulo' ) );
+    $date_dif       = $date_now->diff( $date );
+    $minutes_left   =  $date_dif->days * 24 * 60;
+    $minutes_left  += $date_dif->h * 60;
+    $minutes_left  += $date_dif->i;
+
+    if( $date_now >= $date )
+        return -$minutes_left;
+
+    return $minutes_left;
+}
+
 function oaa_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
     global $wp_filter;
 
