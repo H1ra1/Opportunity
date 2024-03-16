@@ -164,5 +164,62 @@ function oaa_get_increment_by_rule( int $rule_id, $current_bid ) {
     }
 }
 
+function oaa_pre_vet_historic( int $post_id, object $post, bool $update ) {
+    if( $post->post_type == 'animal' && ! $update ) {
+        $items = [
+            [
+                'title' => 'Prognata',
+                'value' => 0
+            ],
+            [
+                'title' => 'Cirurgia de Cólica',
+                'value' => 0
+            ],
+            [
+                'title' => 'Aerofágico',
+                'value' => 0
+            ],
+            [
+                'title' => 'Cicatrizes',
+                'value' => 0
+            ],
+            [
+                'title' => 'Criptorquídico',
+                'value' => 0
+            ],
+            [
+                'title' => 'HYPP',
+                'value' => 0
+            ],
+            [
+                'title' => 'Cirurgia de Neurectomia',
+                'value' => 0
+            ],
+            [
+                'title' => 'DPOC',
+                'value' => 0
+            ],
+            [
+                'title' => 'Já teve Laminite',
+                'value' => 0
+            ],
+            [
+                'title' => 'Cirurgia Grave',
+                'value' => 0
+            ],
+        ];
+
+        update_post_meta( $post_id, 'animal_historico_veterinario_data', count( $items ) );
+
+        foreach( $items as $item_index => $item ) {
+            add_post_meta( $post_id, "animal_historico_veterinario_data_{$item_index}_titulo", $item[ 'title' ], true );
+            add_post_meta( $post_id, "animal_historico_veterinario_data_{$item_index}_valor", $item[ 'value' ], true );
+        }
+    }
+}
+
 // Add filters.
 add_filter( 'show_admin_bar' , 'oaa_hide_wordpress_admin_bar');
+
+// Add actions.
+add_action( 'wp_insert_post', 'oaa_pre_vet_historic', 10, 3 );
